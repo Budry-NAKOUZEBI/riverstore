@@ -1,0 +1,142 @@
+[
+  {
+    "id": "p1",
+    "name": "Veste en jean oversize",
+    "description": "Veste en denim brut à coupe ample, doublure douce et boutons pression.",
+    "price": 59.90,
+    "category": "Vêtements",
+    "imageUrl": "https://picsum.photos/seed/p1/600/600",
+    "rating": 4.3,
+    "stock": 12
+  },
+  {
+    "id": "p2",
+    "name": "T-shirt col rond coton bio",
+    "description": "T-shirt basique en coton biologique certifié, coupe droite intemporelle.",
+    "price": 19.90,
+    "category": "Vêtements",
+    "imageUrl": "https://picsum.photos/seed/p2/600/600",
+    "rating": 4.6,
+    "stock": 40
+  },
+  {
+    "id": "p3",
+    "name": "Sneakers running Aero",
+    "description": "Chaussures de course légères avec semelle amortissante et mesh respirant.",
+    "price": 89.00,
+    "category": "Chaussures",
+    "imageUrl": "https://picsum.photos/seed/p3/600/600",
+    "rating": 4.5,
+    "stock": 8
+  },
+  {
+    "id": "p4",
+    "name": "Bottines cuir suédé",
+    "description": "Bottines en cuir suédé véritable, semelle antidérapante et doublure chaude.",
+    "price": 129.00,
+    "category": "Chaussures",
+    "imageUrl": "https://picsum.photos/seed/p4/600/600",
+    "rating": 4.1,
+    "stock": 5
+  },
+  {
+    "id": "p5",
+    "name": "Casque audio sans fil",
+    "description": "Casque Bluetooth à réduction de bruit active, 30h d'autonomie.",
+    "price": 79.90,
+    "category": "Électronique",
+    "imageUrl": "https://picsum.photos/seed/p5/600/600",
+    "rating": 4.7,
+    "stock": 15
+  },
+  {
+    "id": "p6",
+    "name": "Montre connectée Sport",
+    "description": "Suivi d'activité, notifications et mesure de la fréquence cardiaque.",
+    "price": 149.00,
+    "category": "Électronique",
+    "imageUrl": "https://picsum.photos/seed/p6/600/600",
+    "rating": 4.2,
+    "stock": 10
+  },
+  {
+    "id": "p7",
+    "name": "Sac à dos urbain 20L",
+    "description": "Sac à dos compact avec compartiment ordinateur portable et poches étanches.",
+    "price": 45.50,
+    "category": "Accessoires",
+    "imageUrl": "https://picsum.photos/seed/p7/600/600",
+    "rating": 4.4,
+    "stock": 20
+  },
+  {
+    "id": "p8",
+    "name": "Ceinture cuir réversible",
+    "description": "Ceinture réversible noir/marron en cuir véritable avec boucle amovible.",
+    "price": 29.90,
+    "category": "Accessoires",
+    "imageUrl": "https://picsum.photos/seed/p8/600/600",
+    "rating": 3.9,
+    "stock": 25
+  },
+  {
+    "id": "p9",
+    "name": "Lampe de bureau LED",
+    "description": "Lampe LED à intensité réglable avec port de charge USB intégré.",
+    "price": 34.90,
+    "category": "Maison",
+    "imageUrl": "https://picsum.photos/seed/p9/600/600",
+    "rating": 4.0,
+    "stock": 18
+  },
+  {
+    "id": "p10",
+    "name": "Coussin décoratif velours",
+    "description": "Coussin en velours doux, housse déhoussable et lavable en machine.",
+    "price": 22.00,
+    "category": "Maison",
+    "imageUrl": "https://picsum.photos/seed/p10/600/600",
+    "rating": 4.3,
+    "stock": 30
+  },
+  {
+    "id": "p11",
+    "name": "Robe d'été fleurie",
+    "description": "Robe légère en viscose à motifs floraux, idéale pour la saison chaude.",
+    "price": 49.90,
+    "category": "Vêtements",
+    "imageUrl": "https://picsum.photos/seed/p11/600/600",
+    "rating": 4.5,
+    "stock": 14
+  },
+  {
+    "id": "p12",
+    "name": "Baskets basses cuir blanc",
+    "description": "Baskets minimalistes en cuir blanc, semelle en caoutchouc durable.",
+    "price": 99.00,
+    "category": "Chaussures",
+    "imageUrl": "https://picsum.photos/seed/p12/600/600",
+    "rating": 4.6,
+    "stock": 9
+  },
+  {
+    "id": "p13",
+    "name": "Enceinte Bluetooth portable",
+    "description": "Enceinte compacte étanche IPX6 avec 12h d'autonomie et son 360°.",
+    "price": 59.00,
+    "category": "Électronique",
+    "imageUrl": "https://picsum.photos/seed/p13/600/600",
+    "rating": 4.1,
+    "stock": 22
+  },
+  {
+    "id": "p14",
+    "name": "Plaid tricot laine",
+    "description": "Plaid douillet en laine mélangée, parfait pour les soirées au coin du feu.",
+    "price": 39.90,
+    "category": "Maison",
+    "imageUrl": "https://picsum.photos/seed/p14/600/600",
+    "rating": 4.4,
+    "stock": 11
+  }
+]
