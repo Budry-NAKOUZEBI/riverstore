@@ -59,7 +59,7 @@ jobs:
               f.write(f'### Couverture de code : {pct:.1f}% ({hit}/{found} lignes)\n')
           PY
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: coverage
           path: coverage/lcov.info
@@ -157,14 +157,14 @@ jobs:
           mv build/app/outputs/flutter-apk/app-release.apk "$name.apk"
           mv build/app/outputs/bundle/release/app-release.aab "$name.aab"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: riverstore-android
           path: |
             riverstore-*.apk
             riverstore-*.aab
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: debug-symbols
           path: build/symbols
