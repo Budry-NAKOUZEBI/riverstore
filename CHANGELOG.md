@@ -139,8 +139,8 @@ Première version de RiverStore (jalon « State management avec Riverpod »).
 - Profil utilisateur simulé.
 - Thèmes clair et sombre Material 3.
 
-[Unreleased]: https://github.com/dp1370913-pixel/riverstore/compare/v2.1.0...HEAD
-[2.1.0]: https://github.com/dp1370913-pixel/riverstore/compare/v2.0.0...v2.1.0
-[2.0.0]: https://github.com/dp1370913-pixel/riverstore/compare/v1.1.0...v2.0.0
-[1.1.0]: https://github.com/dp1370913-pixel/riverstore/compare/v1.0.0...v1.1.0
-[1.0.0]: https://github.com/dp1370913-pixel/riverstore/releases/tag/v1.0.0
+[Unreleased]: https://github.com/Budry-NAKOUZEBI/riverstore/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/Budry-NAKOUZEBI/riverstore/compare/v2.0.0...v2.1.0
+[2.0.0]: https://github.com/Budry-NAKOUZEBI/riverstore/compare/v1.1.0...v2.0.0
+[1.1.0]: https://github.com/Budry-NAKOUZEBI/riverstore/compare/v1.0.0...v1.1.0
+[1.0.0]: https://github.com/Budry-NAKOUZEBI/riverstore/releases/tag/v1.0.0

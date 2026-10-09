@@ -1,6 +1,6 @@
 # RiverStore
 
-[![CI](https://github.com/dp1370913-pixel/riverstore/actions/workflows/ci.yml/badge.svg)](https://github.com/dp1370913-pixel/riverstore/actions/workflows/ci.yml)
+[![CI](https://github.com/Budry-NAKOUZEBI/riverstore/actions/workflows/ci.yml/badge.svg)](https://github.com/Budry-NAKOUZEBI/riverstore/actions/workflows/ci.yml)
 ![Flutter](https://img.shields.io/badge/Flutter-3.47-02569B?logo=flutter)
 ![Dart](https://img.shields.io/badge/Dart-3.13-0175C2?logo=dart)
 ![Coverage](https://img.shields.io/badge/couverture-87%25-brightgreen)
@@ -23,7 +23,7 @@ visuelle propre, internationalisation FR/EN, accessibilité vérifiée par des
 tests, performances mesurées, CI/CD et APK publié automatiquement.
 
 > **APK de démonstration** : téléchargeable dans les
-> [Releases](https://github.com/dp1370913-pixel/riverstore/releases) (publié
+> [Releases](https://github.com/Budry-NAKOUZEBI/riverstore/releases) (publié
 > par la CI à chaque tag `v*`) ou dans les artefacts du dernier run CI.
 
 ## Sommaire
@@ -249,7 +249,7 @@ Prérequis : Flutter **3.47** (Dart 3.13). Pour Android : un JDK 17+ complet
 (avec `javac`).
 
 ```bash
-git clone https://github.com/dp1370913-pixel/riverstore.git
+git clone https://github.com/Budry-NAKOUZEBI/riverstore.git
 cd riverstore
 flutter pub get          # génère aussi les traductions
 flutter run              # appareil ou émulateur connecté
