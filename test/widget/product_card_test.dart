@@ -4,36 +4,49 @@ import 'package:riverstore/src/data/models/product.dart';
 import 'package:riverstore/src/providers/cart_providers.dart';
 import 'package:riverstore/src/providers/favorites_providers.dart';
 import 'package:riverstore/src/ui/widgets/product_card.dart';
+import 'package:riverstore/src/ui/widgets/round_icon_button.dart';
 
 import '../helpers/fixtures.dart';
 import '../helpers/pump_app.dart';
+
+Finder roundButton(String label) => find.byWidgetPredicate(
+  (widget) => widget is RoundIconButton && widget.label == label,
+);
 
 Widget card(Product product, {VoidCallback? onTap}) => Scaffold(
   body: Center(
     child: SizedBox(
       width: 200,
-      height: 320,
+      height: 330,
       child: ProductCard(product: product, onTap: onTap ?? () {}),
     ),
   ),
 );
 
+/// Le prix est rendu en deux segments (montant + « FCFA »).
+Finder priceText(String digits) => find.byWidgetPredicate(
+  (widget) =>
+      widget is RichText && widget.text.toPlainText().startsWith(digits),
+);
+
 void main() {
-  testWidgets('shows the localized name, rating and formatted price', (
+  testWidgets('shows the localized name, category, rating and FCFA price', (
     tester,
   ) async {
-    await tester.pumpLocalized(card(headphones));
-    expect(find.text('Casque audio'), findsOneWidget);
+    await tester.pumpLocalized(card(pagne));
+    expect(find.text('Pagne wax'), findsOneWidget);
+    expect(find.text('MODE & PAGNES'), findsOneWidget);
     expect(find.text('4.7'), findsOneWidget);
-    expect(find.text('79,90 €'), findsOneWidget);
+    expect(priceText('18 000 FCFA'), findsOneWidget);
   });
 
-  testWidgets('switches product name and price format in English', (
+  testWidgets('switches name, category and number format in English', (
     tester,
   ) async {
-    await tester.pumpLocalized(card(headphones), locale: const Locale('en'));
-    expect(find.text('Headphones'), findsOneWidget);
-    expect(find.text('€79.90'), findsOneWidget);
+    await tester.pumpLocalized(card(pagne), locale: const Locale('en'));
+    expect(find.text('Wax print fabric'), findsOneWidget);
+    expect(find.text('FASHION & WAX'), findsOneWidget);
+    expect(priceText('18,000 FCFA'), findsOneWidget);
   });
 
   testWidgets('tapping the card opens details, buttons act independently', (
@@ -41,34 +54,31 @@ void main() {
   ) async {
     var opened = 0;
     final container = await tester.pumpLocalized(
-      card(headphones, onTap: () => opened++),
+      card(pagne, onTap: () => opened++),
     );
 
-    await tester.tap(find.text('Casque audio'));
+    await tester.tap(find.text('Pagne wax'));
     expect(opened, 1);
 
-    await tester.tap(find.byTooltip('Ajouter aux favoris'));
+    await tester.tap(roundButton('Ajouter aux favoris'));
     await tester.pumpAndSettle();
-    expect(container.read(isFavoriteProvider(headphones.id)), isTrue);
-    expect(find.byTooltip('Retirer des favoris'), findsOneWidget);
+    expect(container.read(isFavoriteProvider(pagne.id)), isTrue);
+    expect(roundButton('Retirer des favoris'), findsOneWidget);
 
-    await tester.tap(find.byTooltip('Ajouter Casque audio au panier'));
+    await tester.tap(roundButton('Ajouter Pagne wax au panier'));
     await tester.pumpAndSettle();
-    expect(container.read(cartProvider).quantityOf(headphones.id), 1);
-    expect(find.text('Casque audio ajouté au panier'), findsOneWidget);
+    expect(container.read(cartProvider).quantityOf(pagne.id), 1);
+    expect(find.text('Pagne wax ajouté au panier'), findsOneWidget);
     expect(opened, 1);
   });
 
   testWidgets('out-of-stock products show a badge and cannot be added', (
     tester,
   ) async {
-    await tester.pumpLocalized(card(screen));
+    await tester.pumpLocalized(card(solarKit));
     expect(find.text('Rupture de stock'), findsOneWidget);
-    final button = tester.widget<IconButton>(
-      find.ancestor(
-        of: find.byIcon(Icons.add_shopping_cart),
-        matching: find.byType(IconButton),
-      ),
+    final button = tester.widget<RoundIconButton>(
+      roundButton('Rupture de stock'),
     );
     expect(button.onPressed, isNull);
   });
@@ -77,9 +87,9 @@ void main() {
     tester,
   ) async {
     final semantics = tester.ensureSemantics();
-    await tester.pumpLocalized(card(headphones));
+    await tester.pumpLocalized(card(pagne));
     expect(
-      find.bySemanticsLabel('Casque audio, 79,90 €, noté 4.7 sur 5'),
+      find.bySemanticsLabel('Pagne wax, 18 000 FCFA, noté 4.7 sur 5'),
       findsOneWidget,
     );
     semantics.dispose();

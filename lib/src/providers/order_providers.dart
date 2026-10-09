@@ -34,13 +34,20 @@ class CheckoutController extends AsyncNotifier<Order?> {
   @override
   Future<Order?> build() async => null;
 
-  Future<Order?> submit(ShippingAddress address) async {
+  Future<Order?> submit(
+    ShippingAddress address, {
+    required PaymentMethod paymentMethod,
+  }) async {
     final items = ref.read(cartProvider).itemList;
     state = const AsyncLoading();
     final result = await AsyncValue.guard(
       () => ref
           .read(orderRepositoryProvider)
-          .placeOrder(items: items, address: address),
+          .placeOrder(
+            items: items,
+            address: address,
+            paymentMethod: paymentMethod,
+          ),
     );
     if (!ref.mounted) return result.value;
     final order = result.value;

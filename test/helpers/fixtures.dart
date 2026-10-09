@@ -6,10 +6,10 @@ import 'package:riverstore/src/data/models/user_profile.dart';
 
 Product buildProduct({
   String id = 'p1',
-  String nameFr = 'Casque audio',
-  String nameEn = 'Headphones',
-  int priceInCents = 7990,
-  ProductCategory category = ProductCategory.electronics,
+  String nameFr = 'Pagne wax',
+  String nameEn = 'Wax print fabric',
+  int price = 18000,
+  ProductCategory category = ProductCategory.fashion,
   double rating = 4.7,
   int stock = 15,
 }) {
@@ -20,7 +20,7 @@ Product buildProduct({
       'fr': 'Description',
       'en': 'Description',
     }),
-    priceInCents: priceInCents,
+    price: price,
     category: category,
     imageUrl: 'https://example.com/$id.png',
     thumbnailUrl: 'https://example.com/$id-thumb.png',
@@ -29,53 +29,58 @@ Product buildProduct({
   );
 }
 
-final headphones = buildProduct();
+/// 18 000 FCFA, mode, 15 en stock.
+final pagne = buildProduct();
 
-final sneakers = buildProduct(
+/// 12 500 FCFA, chaussures, seulement 3 en stock.
+final sandals = buildProduct(
   id: 'p2',
-  nameFr: 'Sneakers running',
-  nameEn: 'Running sneakers',
-  priceInCents: 8900,
+  nameFr: 'Sandales en cuir',
+  nameEn: 'Leather sandals',
+  price: 12500,
   category: ProductCategory.shoes,
   rating: 4.5,
   stock: 3,
 );
 
-final lamp = buildProduct(
+/// 14 000 FCFA, maison.
+final pot = buildProduct(
   id: 'p3',
-  nameFr: 'Lampe de bureau',
-  nameEn: 'Desk lamp',
-  priceInCents: 2490,
+  nameFr: 'Marmite en inox',
+  nameEn: 'Stainless steel pot',
+  price: 14000,
   category: ProductCategory.home,
   rating: 4.0,
   stock: 18,
 );
 
-final screen = buildProduct(
+/// 250 000 FCFA, high-tech, en rupture de stock, nom accentué.
+final solarKit = buildProduct(
   id: 'p4',
-  nameFr: 'Écran incurvé',
-  nameEn: 'Curved monitor',
-  priceInCents: 19900,
+  nameFr: "Kit d'éclairage solaire",
+  nameEn: 'Solar lighting kit',
+  price: 250000,
   category: ProductCategory.electronics,
   rating: 4.1,
   stock: 0,
 );
 
-final testProducts = [headphones, sneakers, lamp, screen];
+final testProducts = [pagne, sandals, pot, solarKit];
 
 final testUser = UserProfile(
   id: 'u1',
-  name: 'Camille Dubois',
-  email: 'camille@example.com',
-  avatarUrl: 'https://example.com/avatar.png',
+  name: 'Grâce Mabiala',
+  email: 'grace@example.cg',
+  phone: '06 612 34 56',
+  city: 'Brazzaville',
   memberSince: DateTime(2023, 3, 12),
   totalOrders: 8,
 );
 
 const testAddress = ShippingAddress(
-  fullName: 'Camille Dubois',
-  email: 'camille@example.com',
-  street: '12 rue des Lilas',
-  postalCode: '75011',
-  city: 'Paris',
+  fullName: 'Grâce Mabiala',
+  phone: '06 612 34 56',
+  city: 'Brazzaville',
+  district: 'Bacongo',
+  street: 'Rue Mbochis, n° 12, près du marché Total',
 );

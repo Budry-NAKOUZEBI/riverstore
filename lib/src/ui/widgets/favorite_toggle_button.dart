@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../providers/favorites_providers.dart';
 import '../l10n_extensions.dart';
+import 'round_icon_button.dart';
 
 class FavoriteToggleButton extends ConsumerWidget {
   const FavoriteToggleButton({
@@ -29,21 +30,26 @@ class FavoriteToggleButton extends ConsumerWidget {
       child: Icon(
         isFavorite ? Icons.favorite : Icons.favorite_border,
         key: ValueKey(isFavorite),
-        color: isFavorite ? Colors.red.shade700 : null,
+        color: isFavorite ? const Color(0xFFC62828) : null,
       ),
     );
     void onPressed() => ref.read(favoritesProvider.notifier).toggle(productId);
     final tooltip = isFavorite ? l10n.removeFromFavorites : l10n.addToFavorites;
 
+    final colors = Theme.of(context).colorScheme;
+    if (onImage) {
+      return RoundIconButton(
+        label: tooltip,
+        toggled: isFavorite,
+        onPressed: onPressed,
+        background: colors.surfaceContainerLowest.withValues(alpha: 0.94),
+        foreground: colors.onSurface,
+        icon: icon,
+      );
+    }
     return Semantics(
       toggled: isFavorite,
-      child: onImage
-          ? IconButton.filledTonal(
-              tooltip: tooltip,
-              onPressed: onPressed,
-              icon: icon,
-            )
-          : IconButton(tooltip: tooltip, onPressed: onPressed, icon: icon),
+      child: IconButton(tooltip: tooltip, onPressed: onPressed, icon: icon),
     );
   }
 }

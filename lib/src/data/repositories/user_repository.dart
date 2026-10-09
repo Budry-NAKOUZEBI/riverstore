@@ -15,9 +15,10 @@ class MockUserRepository implements UserRepository {
     if (latency > Duration.zero) await Future<void>.delayed(latency);
     return UserProfile(
       id: 'u1',
-      name: 'Camille Dubois',
-      email: 'camille.dubois@example.com',
-      avatarUrl: 'https://i.pravatar.cc/200?u=camille.dubois',
+      name: 'Grâce Mabiala',
+      email: 'grace.mabiala@example.cg',
+      phone: '06 612 34 56',
+      city: 'Brazzaville',
       memberSince: DateTime(2023, 3, 12),
       totalOrders: 8,
     );

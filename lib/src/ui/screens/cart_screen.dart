@@ -40,9 +40,9 @@ class CartScreen extends ConsumerWidget {
               onAction: () => context.go(AppRoutes.catalog),
             )
           : ListView.separated(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
               itemCount: productIds.length,
-              separatorBuilder: (_, _) => const Divider(height: 1),
+              separatorBuilder: (_, _) => const SizedBox(height: 10),
               itemBuilder: (context, index) => CartItemTile(
                 key: ValueKey(productIds[index]),
                 productId: productIds[index],
@@ -81,11 +81,16 @@ class _CartFooter extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pricing = ref.watch(cartPricingProvider);
+    final colors = Theme.of(context).colorScheme;
     return Material(
-      elevation: 3,
+      color: colors.surfaceContainerLowest,
+      shape: RoundedRectangleBorder(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+        side: BorderSide(color: colors.outlineVariant),
+      ),
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+          padding: const EdgeInsets.fromLTRB(20, 18, 20, 14),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -93,6 +98,10 @@ class _CartFooter extends ConsumerWidget {
               OrderSummary(pricing: pricing),
               const SizedBox(height: 12),
               FilledButton.icon(
+                style: FilledButton.styleFrom(
+                  backgroundColor: colors.secondary,
+                  foregroundColor: colors.onSecondary,
+                ),
                 onPressed: () => context.go(AppRoutes.checkout),
                 icon: const Icon(Icons.lock_outline),
                 label: Text(context.l10n.checkout),

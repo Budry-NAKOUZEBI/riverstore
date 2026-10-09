@@ -7,6 +7,43 @@ projet respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-10-09
+
+Adaptation au Congo-Brazzaville et nouvelle identité visuelle.
+
+### Added
+- **Contexte local** : prix en **francs CFA** (montants entiers,
+  `25 000 FCFA` / `25,000 FCFA`), livraison à Brazzaville, Pointe-Noire et
+  Dolisie (2 000 FCFA, offerte dès 50 000 FCFA), adresse par **quartier et
+  point de repère**, téléphone **+242** validé (MTN 06, Airtel 04/05).
+- **Moyens de paiement** : MTN Mobile Money, Airtel Money ou espèces à la
+  livraison (simulés), rappelés sur l'écran de confirmation.
+- **Nouveau catalogue** de 17 produits avec de **vraies photos** (Pexels) :
+  pagnes wax, boubou brodé, costume « La Sape », richelieus, sandales
+  artisanales, kit solaire et batterie externe pour les délestages,
+  paniers tressés, sculptures et toile d'un peintre de Brazzaville.
+  Catégories : Mode & pagnes, Chaussures, High-tech, Maison, Artisanat.
+- **Identité visuelle** « fleuve et latérite » : palette vert fleuve /
+  terracotta / or définie pour les thèmes clair et sombre, polices
+  Bricolage Grotesque et Plus Jakarta Sans embarquées (licences OFL
+  déclarées dans l'app), logo, **motif wax vectoriel**, bandeau d'accueil
+  « Mbote ! », barre de progression vers la livraison offerte, fiche
+  produit avec grande photo repliable.
+- Test de performance mesuré **avec et sans lecteur d'écran**.
+
+### Changed
+- Profil : avatar remplacé par les initiales (plus de photo d'une personne
+  réelle présentée comme l'utilisatrice), téléphone et ville affichés.
+- Cartes produit : noms sur deux lignes, catégorie, note et prix mis en
+  avant ; boutons favori et panier remplacés par un `RoundIconButton`
+  léger (même zone tactile et même libellé d'accessibilité, coût de
+  construction de la carte réduit).
+- `formatPrice` met en cache un `NumberFormat` par locale.
+
+### Removed
+- Champs e-mail et code postal du formulaire de livraison (non pertinents
+  pour la livraison au Congo).
+
 ## [2.0.0] - 2026-10-09
 
 Version « production-ready » : l'application est testée de bout en bout,
@@ -102,7 +139,8 @@ Première version de RiverStore (jalon « State management avec Riverpod »).
 - Profil utilisateur simulé.
 - Thèmes clair et sombre Material 3.
 
-[Unreleased]: https://github.com/dp1370913-pixel/riverstore/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/dp1370913-pixel/riverstore/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/dp1370913-pixel/riverstore/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/dp1370913-pixel/riverstore/compare/v1.1.0...v2.0.0
 [1.1.0]: https://github.com/dp1370913-pixel/riverstore/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/dp1370913-pixel/riverstore/releases/tag/v1.0.0

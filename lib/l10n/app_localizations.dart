@@ -164,12 +164,6 @@ abstract class AppLocalizations {
   /// **'Tous'**
   String get categoryAll;
 
-  /// No description provided for @categoryClothing.
-  ///
-  /// In fr, this message translates to:
-  /// **'Vêtements'**
-  String get categoryClothing;
-
   /// No description provided for @categoryShoes.
   ///
   /// In fr, this message translates to:
@@ -179,14 +173,8 @@ abstract class AppLocalizations {
   /// No description provided for @categoryElectronics.
   ///
   /// In fr, this message translates to:
-  /// **'Électronique'**
+  /// **'High-tech'**
   String get categoryElectronics;
-
-  /// No description provided for @categoryAccessories.
-  ///
-  /// In fr, this message translates to:
-  /// **'Accessoires'**
-  String get categoryAccessories;
 
   /// No description provided for @categoryHome.
   ///
@@ -290,12 +278,6 @@ abstract class AppLocalizations {
   /// **'voir le détail'**
   String get productCardHint;
 
-  /// No description provided for @productImageSemantics.
-  ///
-  /// In fr, this message translates to:
-  /// **'Photo du produit {name}'**
-  String productImageSemantics(String name);
-
   /// No description provided for @ratingSemantics.
   ///
   /// In fr, this message translates to:
@@ -383,7 +365,7 @@ abstract class AppLocalizations {
   /// No description provided for @favoritesEmpty.
   ///
   /// In fr, this message translates to:
-  /// **'Vous n\'avez pas encore de favoris.\nTouchez le cœur d\'un produit pour l\'ajouter ici.'**
+  /// **'Aucun favori pour l\'instant.\nTouchez le cœur d\'un produit pour le retrouver ici.'**
   String get favoritesEmpty;
 
   /// No description provided for @cartTitle.
@@ -485,7 +467,7 @@ abstract class AppLocalizations {
   /// No description provided for @shipping.
   ///
   /// In fr, this message translates to:
-  /// **'Livraison'**
+  /// **'Livraison à domicile'**
   String get shipping;
 
   /// No description provided for @shippingFree.
@@ -515,7 +497,7 @@ abstract class AppLocalizations {
   /// No description provided for @checkoutTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Livraison'**
+  /// **'Livraison & paiement'**
   String get checkoutTitle;
 
   /// No description provided for @fieldFullName.
@@ -524,23 +506,11 @@ abstract class AppLocalizations {
   /// **'Nom complet'**
   String get fieldFullName;
 
-  /// No description provided for @fieldEmail.
-  ///
-  /// In fr, this message translates to:
-  /// **'E-mail'**
-  String get fieldEmail;
-
   /// No description provided for @fieldStreet.
   ///
   /// In fr, this message translates to:
-  /// **'Adresse'**
+  /// **'Adresse et point de repère'**
   String get fieldStreet;
-
-  /// No description provided for @fieldPostalCode.
-  ///
-  /// In fr, this message translates to:
-  /// **'Code postal'**
-  String get fieldPostalCode;
 
   /// No description provided for @fieldCity.
   ///
@@ -559,18 +529,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Valeur trop courte'**
   String get errorTooShort;
-
-  /// No description provided for @errorInvalidEmail.
-  ///
-  /// In fr, this message translates to:
-  /// **'Adresse e-mail invalide'**
-  String get errorInvalidEmail;
-
-  /// No description provided for @errorInvalidPostalCode.
-  ///
-  /// In fr, this message translates to:
-  /// **'Code postal invalide (5 chiffres)'**
-  String get errorInvalidPostalCode;
 
   /// No description provided for @orderSummary.
   ///
@@ -593,7 +551,7 @@ abstract class AppLocalizations {
   /// No description provided for @paymentNotice.
   ///
   /// In fr, this message translates to:
-  /// **'Paiement simulé : aucune somme ne sera débitée.'**
+  /// **'Démonstration : aucune transaction Mobile Money réelle n\'est effectuée.'**
   String get paymentNotice;
 
   /// No description provided for @orderFailed.
@@ -649,12 +607,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Profil'**
   String get profileTitle;
-
-  /// No description provided for @avatarSemantics.
-  ///
-  /// In fr, this message translates to:
-  /// **'Photo de profil de {name}'**
-  String avatarSemantics(String name);
 
   /// No description provided for @memberSince.
   ///
@@ -769,6 +721,168 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Licences open source'**
   String get licenses;
+
+  /// No description provided for @categoryFashion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mode & pagnes'**
+  String get categoryFashion;
+
+  /// No description provided for @categoryCrafts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Artisanat'**
+  String get categoryCrafts;
+
+  /// No description provided for @heroGreeting.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mbote !'**
+  String get heroGreeting;
+
+  /// No description provided for @heroTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le meilleur de Brazzaville, livré chez vous.'**
+  String get heroTitle;
+
+  /// No description provided for @heroSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mode, artisanat et high-tech, livrés à Brazzaville, Pointe-Noire et Dolisie.'**
+  String get heroSubtitle;
+
+  /// No description provided for @heroBadge.
+  ///
+  /// In fr, this message translates to:
+  /// **'Livraison offerte dès {amount}'**
+  String heroBadge(String amount);
+
+  /// No description provided for @greetingUser.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mbote, {name}'**
+  String greetingUser(String name);
+
+  /// No description provided for @productImageSemantics.
+  ///
+  /// In fr, this message translates to:
+  /// **'Photo : {name}'**
+  String productImageSemantics(String name);
+
+  /// No description provided for @fieldPhone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Téléphone'**
+  String get fieldPhone;
+
+  /// No description provided for @fieldPhoneHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'06 123 45 67'**
+  String get fieldPhoneHint;
+
+  /// No description provided for @fieldDistrict.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quartier / arrondissement'**
+  String get fieldDistrict;
+
+  /// No description provided for @fieldDistrictHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bacongo, Poto-Poto, Moungali…'**
+  String get fieldDistrictHint;
+
+  /// No description provided for @fieldStreetHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rue, numéro, près de…'**
+  String get fieldStreetHint;
+
+  /// No description provided for @errorInvalidPhone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Numéro invalide (ex. 06 123 45 67)'**
+  String get errorInvalidPhone;
+
+  /// No description provided for @sectionDelivery.
+  ///
+  /// In fr, this message translates to:
+  /// **'Adresse de livraison'**
+  String get sectionDelivery;
+
+  /// No description provided for @sectionPayment.
+  ///
+  /// In fr, this message translates to:
+  /// **'Moyen de paiement'**
+  String get sectionPayment;
+
+  /// No description provided for @paymentMtn.
+  ///
+  /// In fr, this message translates to:
+  /// **'MTN Mobile Money'**
+  String get paymentMtn;
+
+  /// No description provided for @paymentAirtel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Airtel Money'**
+  String get paymentAirtel;
+
+  /// No description provided for @paymentCash.
+  ///
+  /// In fr, this message translates to:
+  /// **'Espèces à la livraison'**
+  String get paymentCash;
+
+  /// No description provided for @paymentMobileHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une demande de validation est envoyée sur votre téléphone.'**
+  String get paymentMobileHint;
+
+  /// No description provided for @paymentCashHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Payez le livreur en espèces à la réception.'**
+  String get paymentCashHint;
+
+  /// No description provided for @orderPaidWith.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paiement : {method}'**
+  String orderPaidWith(String method);
+
+  /// No description provided for @profileContact.
+  ///
+  /// In fr, this message translates to:
+  /// **'{phone} · {city}'**
+  String profileContact(String phone, String city);
+
+  /// No description provided for @avatarSemantics.
+  ///
+  /// In fr, this message translates to:
+  /// **'Initiales de {name}'**
+  String avatarSemantics(String name);
+
+  /// No description provided for @productCategoryLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Catégorie : {category}'**
+  String productCategoryLabel(String category);
+
+  /// No description provided for @detailDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Description'**
+  String get detailDescription;
+
+  /// No description provided for @detailPrice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix'**
+  String get detailPrice;
 }
 
 class _AppLocalizationsDelegate

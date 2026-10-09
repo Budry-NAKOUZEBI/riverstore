@@ -9,7 +9,7 @@ class Product {
     required this.id,
     required this.name,
     required this.description,
-    required this.priceInCents,
+    required this.price,
     required this.category,
     required this.imageUrl,
     required this.thumbnailUrl,
@@ -23,9 +23,8 @@ class Product {
       id: json['id'] as String,
       name: LocalizedText.fromJson(json['name']),
       description: LocalizedText.fromJson(json['description']),
-      // Les montants sont manipulés en centimes pour éviter les erreurs
-      // d'arrondi des `double` lors des calculs de totaux.
-      priceInCents: ((json['price'] as num) * 100).round(),
+      // Montants entiers en francs CFA : aucun calcul en `double`.
+      price: (json['price'] as num).round(),
       category: ProductCategory.values.byName(json['category'] as String),
       imageUrl: imageUrl,
       thumbnailUrl: json['thumbnailUrl'] as String? ?? imageUrl,
@@ -37,7 +36,9 @@ class Product {
   final String id;
   final LocalizedText name;
   final LocalizedText description;
-  final int priceInCents;
+
+  /// Prix unitaire en francs CFA (XAF).
+  final int price;
   final ProductCategory category;
 
   /// Image pleine résolution (écran de détail).

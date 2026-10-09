@@ -51,16 +51,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get categoryAll => 'Tous';
 
   @override
-  String get categoryClothing => 'Vêtements';
-
-  @override
   String get categoryShoes => 'Chaussures';
 
   @override
-  String get categoryElectronics => 'Électronique';
-
-  @override
-  String get categoryAccessories => 'Accessoires';
+  String get categoryElectronics => 'High-tech';
 
   @override
   String get categoryHome => 'Maison';
@@ -114,11 +108,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get productCardHint => 'voir le détail';
-
-  @override
-  String productImageSemantics(String name) {
-    return 'Photo du produit $name';
-  }
 
   @override
   String ratingSemantics(String rating) {
@@ -186,7 +175,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get favoritesEmpty =>
-      'Vous n\'avez pas encore de favoris.\nTouchez le cœur d\'un produit pour l\'ajouter ici.';
+      'Aucun favori pour l\'instant.\nTouchez le cœur d\'un produit pour le retrouver ici.';
 
   @override
   String get cartTitle => 'Mon panier';
@@ -250,7 +239,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get subtotal => 'Sous-total';
 
   @override
-  String get shipping => 'Livraison';
+  String get shipping => 'Livraison à domicile';
 
   @override
   String get shippingFree => 'Offerte';
@@ -267,19 +256,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get checkout => 'Commander';
 
   @override
-  String get checkoutTitle => 'Livraison';
+  String get checkoutTitle => 'Livraison & paiement';
 
   @override
   String get fieldFullName => 'Nom complet';
 
   @override
-  String get fieldEmail => 'E-mail';
-
-  @override
-  String get fieldStreet => 'Adresse';
-
-  @override
-  String get fieldPostalCode => 'Code postal';
+  String get fieldStreet => 'Adresse et point de repère';
 
   @override
   String get fieldCity => 'Ville';
@@ -289,12 +272,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get errorTooShort => 'Valeur trop courte';
-
-  @override
-  String get errorInvalidEmail => 'Adresse e-mail invalide';
-
-  @override
-  String get errorInvalidPostalCode => 'Code postal invalide (5 chiffres)';
 
   @override
   String get orderSummary => 'Récapitulatif';
@@ -308,7 +285,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get placingOrder => 'Envoi de la commande…';
 
   @override
-  String get paymentNotice => 'Paiement simulé : aucune somme ne sera débitée.';
+  String get paymentNotice =>
+      'Démonstration : aucune transaction Mobile Money réelle n\'est effectuée.';
 
   @override
   String get orderFailed => 'La commande n\'a pas pu être envoyée. Réessayez.';
@@ -348,11 +326,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get profileTitle => 'Profil';
-
-  @override
-  String avatarSemantics(String name) {
-    return 'Photo de profil de $name';
-  }
 
   @override
   String memberSince(DateTime date) {
@@ -417,4 +390,101 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get licenses => 'Licences open source';
+
+  @override
+  String get categoryFashion => 'Mode & pagnes';
+
+  @override
+  String get categoryCrafts => 'Artisanat';
+
+  @override
+  String get heroGreeting => 'Mbote !';
+
+  @override
+  String get heroTitle => 'Le meilleur de Brazzaville, livré chez vous.';
+
+  @override
+  String get heroSubtitle =>
+      'Mode, artisanat et high-tech, livrés à Brazzaville, Pointe-Noire et Dolisie.';
+
+  @override
+  String heroBadge(String amount) {
+    return 'Livraison offerte dès $amount';
+  }
+
+  @override
+  String greetingUser(String name) {
+    return 'Mbote, $name';
+  }
+
+  @override
+  String productImageSemantics(String name) {
+    return 'Photo : $name';
+  }
+
+  @override
+  String get fieldPhone => 'Téléphone';
+
+  @override
+  String get fieldPhoneHint => '06 123 45 67';
+
+  @override
+  String get fieldDistrict => 'Quartier / arrondissement';
+
+  @override
+  String get fieldDistrictHint => 'Bacongo, Poto-Poto, Moungali…';
+
+  @override
+  String get fieldStreetHint => 'Rue, numéro, près de…';
+
+  @override
+  String get errorInvalidPhone => 'Numéro invalide (ex. 06 123 45 67)';
+
+  @override
+  String get sectionDelivery => 'Adresse de livraison';
+
+  @override
+  String get sectionPayment => 'Moyen de paiement';
+
+  @override
+  String get paymentMtn => 'MTN Mobile Money';
+
+  @override
+  String get paymentAirtel => 'Airtel Money';
+
+  @override
+  String get paymentCash => 'Espèces à la livraison';
+
+  @override
+  String get paymentMobileHint =>
+      'Une demande de validation est envoyée sur votre téléphone.';
+
+  @override
+  String get paymentCashHint => 'Payez le livreur en espèces à la réception.';
+
+  @override
+  String orderPaidWith(String method) {
+    return 'Paiement : $method';
+  }
+
+  @override
+  String profileContact(String phone, String city) {
+    return '$phone · $city';
+  }
+
+  @override
+  String avatarSemantics(String name) {
+    return 'Initiales de $name';
+  }
+
+  @override
+  String productCategoryLabel(String category) {
+    return 'Catégorie : $category';
+  }
+
+  @override
+  String get detailDescription => 'Description';
+
+  @override
+  String get detailPrice => 'Prix';
 }

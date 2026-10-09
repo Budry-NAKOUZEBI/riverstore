@@ -5,6 +5,7 @@ import 'src/bootstrap.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  registerFontLicenses();
   final preferences = await SharedPreferences.getInstance();
   runApp(buildApp(preferences: preferences));
 }

@@ -27,10 +27,14 @@ class FavoritesScreen extends ConsumerWidget {
                 actionLabel: l10n.startShopping,
                 onAction: () => context.go(AppRoutes.catalog),
               )
-            : ProductGrid(
-                products: products,
-                onProductTap: (product) =>
-                    context.go(AppRoutes.favoriteProduct(product.id)),
+            : CustomScrollView(
+                slivers: [
+                  ProductGrid(
+                    products: products,
+                    onProductTap: (product) =>
+                        context.go(AppRoutes.favoriteProduct(product.id)),
+                  ),
+                ],
               ),
         loading: () => const LoadingView(),
         error: (error, _) => ErrorView(

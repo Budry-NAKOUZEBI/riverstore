@@ -14,68 +14,68 @@ void main() {
   });
 
   test('addProduct adds a line then increments its quantity', () {
-    expect(cart.addProduct(headphones), isTrue);
-    cart.addProduct(headphones);
+    expect(cart.addProduct(pagne), isTrue);
+    cart.addProduct(pagne);
 
     final state = container.read(cartProvider);
     expect(state.items.length, 1);
-    expect(state.quantityOf(headphones.id), 2);
-    expect(state.subtotalInCents, 2 * 7990);
+    expect(state.quantityOf(pagne.id), 2);
+    expect(state.subtotal, 36000);
   });
 
   test('addProduct never exceeds the available stock', () {
-    // sneakers.stock == 3
-    expect(cart.addProduct(sneakers, quantity: 5), isTrue);
-    expect(container.read(cartProvider).quantityOf(sneakers.id), 3);
-    expect(cart.addProduct(sneakers), isFalse);
+    // sandals.stock == 3
+    expect(cart.addProduct(sandals, quantity: 5), isTrue);
+    expect(container.read(cartProvider).quantityOf(sandals.id), 3);
+    expect(cart.addProduct(sandals), isFalse);
   });
 
   test('out-of-stock products cannot be added', () {
-    expect(cart.addProduct(screen), isFalse);
+    expect(cart.addProduct(solarKit), isFalse);
     expect(container.read(cartProvider).isEmpty, isTrue);
   });
 
   test('decrement down to zero removes the line', () {
-    cart.addProduct(lamp);
-    cart.decrement(lamp.id);
+    cart.addProduct(pot);
+    cart.decrement(pot.id);
     expect(container.read(cartProvider).isEmpty, isTrue);
   });
 
   test('setQuantity clamps to stock and ignores unknown products', () {
-    cart.addProduct(sneakers);
-    cart.setQuantity(sneakers.id, 99);
+    cart.addProduct(sandals);
+    cart.setQuantity(sandals.id, 99);
     cart.setQuantity('unknown', 2);
-    expect(container.read(cartProvider).quantityOf(sneakers.id), 3);
+    expect(container.read(cartProvider).quantityOf(sandals.id), 3);
     expect(container.read(cartProvider).items.length, 1);
   });
 
   test('derived providers expose count, ids and pricing', () {
-    cart.addProduct(headphones);
-    cart.addProduct(lamp, quantity: 2);
+    cart.addProduct(pagne);
+    cart.addProduct(pot, quantity: 2);
 
     expect(container.read(cartItemCountProvider), 3);
-    expect(container.read(cartProductIdsProvider).ids, [
-      headphones.id,
-      lamp.id,
-    ]);
+    expect(container.read(cartProductIdsProvider).ids, [pagne.id, pot.id]);
     final pricing = container.read(cartPricingProvider);
-    expect(pricing.subtotalInCents, 7990 + 2 * 2490);
-    expect(pricing.shippingInCents, 0);
+    expect(pricing.subtotal, 18000 + 2 * 14000);
+    expect(pricing.shipping, 2000, reason: '46 000 FCFA < 50 000 FCFA');
+
+    cart.addProduct(pot);
+    expect(container.read(cartPricingProvider).shipping, 0);
 
     cart.clear();
     expect(container.read(cartItemCountProvider), 0);
   });
 
   test('changing a quantity does not notify the product id list', () async {
-    cart.addProduct(headphones);
+    cart.addProduct(pagne);
     var notifications = 0;
     container.listen(cartProductIdsProvider, (_, _) => notifications++);
 
-    cart.increment(headphones.id);
+    cart.increment(pagne.id);
     await container.pump();
     expect(notifications, 0);
 
-    cart.addProduct(lamp);
+    cart.addProduct(pot);
     await container.pump();
     expect(notifications, 1);
   });

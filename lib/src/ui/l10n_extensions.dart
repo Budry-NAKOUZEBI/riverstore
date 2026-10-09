@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../../l10n/app_localizations.dart';
 import '../core/formatters.dart' as formatters;
 import '../core/validators.dart';
+import '../data/models/order.dart';
 import '../data/models/product_category.dart';
 import '../data/models/product_filter.dart';
 
@@ -14,17 +15,18 @@ extension LocalizationContext on BuildContext {
   /// Langue effectivement affichée (après résolution des locales).
   String get languageCode => Localizations.localeOf(this).languageCode;
 
-  String formatPrice(int cents) =>
-      formatters.formatPrice(cents, Localizations.localeOf(this).toString());
+  /// Montant en francs CFA formaté selon la langue (`25 000 FCFA`).
+  String formatPrice(int amount) =>
+      formatters.formatPrice(amount, Localizations.localeOf(this).toString());
 }
 
 extension ProductCategoryLabel on ProductCategory {
   String label(AppLocalizations l10n) => switch (this) {
-    ProductCategory.clothing => l10n.categoryClothing,
+    ProductCategory.fashion => l10n.categoryFashion,
     ProductCategory.shoes => l10n.categoryShoes,
     ProductCategory.electronics => l10n.categoryElectronics,
-    ProductCategory.accessories => l10n.categoryAccessories,
     ProductCategory.home => l10n.categoryHome,
+    ProductCategory.crafts => l10n.categoryCrafts,
   };
 }
 
@@ -42,7 +44,19 @@ extension ValidationErrorMessage on ValidationError {
   String message(AppLocalizations l10n) => switch (this) {
     ValidationError.required => l10n.errorRequired,
     ValidationError.tooShort => l10n.errorTooShort,
-    ValidationError.invalidEmail => l10n.errorInvalidEmail,
-    ValidationError.invalidPostalCode => l10n.errorInvalidPostalCode,
+    ValidationError.invalidPhone => l10n.errorInvalidPhone,
+  };
+}
+
+extension PaymentMethodLabel on PaymentMethod {
+  String label(AppLocalizations l10n) => switch (this) {
+    PaymentMethod.mtnMobileMoney => l10n.paymentMtn,
+    PaymentMethod.airtelMoney => l10n.paymentAirtel,
+    PaymentMethod.cashOnDelivery => l10n.paymentCash,
+  };
+
+  String hint(AppLocalizations l10n) => switch (this) {
+    PaymentMethod.cashOnDelivery => l10n.paymentCashHint,
+    _ => l10n.paymentMobileHint,
   };
 }

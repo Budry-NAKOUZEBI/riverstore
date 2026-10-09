@@ -32,7 +32,7 @@ void main() {
       final container = await tester.pumpFullApp(
         preferences: {SettingsStorage.languageKey: 'fr'},
       );
-      container.read(cartProvider.notifier).addProduct(headphones);
+      container.read(cartProvider.notifier).addProduct(pagne);
       container.read(routerProvider).go(location);
       await tester.pumpAndSettle();
 

@@ -45,24 +45,27 @@ class CatalogSearchField extends HookConsumerWidget {
     });
 
     final l10n = context.l10n;
-    return TextField(
-      controller: controller,
-      textInputAction: TextInputAction.search,
-      decoration: InputDecoration(
-        labelText: l10n.searchLabel,
-        hintText: l10n.searchHint,
-        prefixIcon: const Icon(Icons.search),
-        isDense: true,
-        suffixIcon: text.isEmpty
-            ? null
-            : IconButton(
-                tooltip: l10n.searchClear,
-                icon: const Icon(Icons.clear),
-                onPressed: () {
-                  controller.clear();
-                  ref.read(filterProvider.notifier).setSearchQuery('');
-                },
-              ),
+    return Semantics(
+      label: l10n.searchLabel,
+      textField: true,
+      child: TextField(
+        controller: controller,
+        textInputAction: TextInputAction.search,
+        decoration: InputDecoration(
+          hintText: l10n.searchHint,
+          prefixIcon: const Icon(Icons.search),
+          isDense: true,
+          suffixIcon: text.isEmpty
+              ? null
+              : IconButton(
+                  tooltip: l10n.searchClear,
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    controller.clear();
+                    ref.read(filterProvider.notifier).setSearchQuery('');
+                  },
+                ),
+        ),
       ),
     );
   }
@@ -82,7 +85,7 @@ class CategoryChips extends ConsumerWidget {
       container: true,
       label: l10n.categoryFilterLabel,
       child: SizedBox(
-        height: 48,
+        height: 56,
         child: ListView(
           scrollDirection: Axis.horizontal,
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -124,6 +127,9 @@ class _Chip extends StatelessWidget {
         label: Text(label),
         selected: selected,
         onSelected: (_) => onSelected(),
+        labelStyle: selected
+            ? TextStyle(color: Theme.of(context).colorScheme.onPrimary)
+            : null,
       ),
     );
   }

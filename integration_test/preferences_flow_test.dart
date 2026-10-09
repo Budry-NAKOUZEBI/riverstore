@@ -4,6 +4,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:riverstore/src/bootstrap.dart';
 import 'package:riverstore/src/data/repositories/settings_storage.dart';
 import 'package:riverstore/src/ui/widgets/product_card.dart';
+import 'package:riverstore/src/ui/widgets/round_icon_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Favoris, langue et thème doivent survivre à un redémarrage de l'app.
@@ -20,7 +21,13 @@ void main() {
     await tester.pumpAndSettle();
 
     // Ajoute le premier produit aux favoris depuis le catalogue.
-    await tester.tap(find.byTooltip('Ajouter aux favoris').first);
+    await tester.tap(
+      find
+          .byWidgetPredicate(
+            (w) => w is RoundIconButton && w.label == 'Ajouter aux favoris',
+          )
+          .first,
+    );
     await tester.pumpAndSettle();
     await tester.tap(find.text('Favoris'));
     await tester.pumpAndSettle();
@@ -49,6 +56,6 @@ void main() {
     await tester.tap(find.text('Favorites'));
     await tester.pumpAndSettle();
     expect(find.byType(ProductCard), findsOneWidget);
-    expect(find.text('Oversized denim jacket'), findsOneWidget);
+    expect(find.text('Dutch wax print fabric, 6 yards'), findsOneWidget);
   });
 }

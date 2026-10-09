@@ -5,6 +5,7 @@ import '../../core/app_info.dart';
 import '../../data/models/app_settings.dart';
 import '../../providers/settings_providers.dart';
 import '../l10n_extensions.dart';
+import '../widgets/brand_logo.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -72,9 +73,14 @@ class SettingsScreen extends ConsumerWidget {
           const Divider(),
           _SectionHeader(l10n.settingsAbout),
           ListTile(
-            leading: const Icon(Icons.info_outline),
-            title: Text(l10n.appTitle),
-            subtitle: Text(l10n.appVersion(appVersion)),
+            title: const Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: BrandLogo(size: 22),
+            ),
+            subtitle: Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: Text(l10n.appVersion(appVersion)),
+            ),
           ),
           ListTile(
             leading: const Icon(Icons.description_outlined),

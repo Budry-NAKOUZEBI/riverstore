@@ -1,11 +1,12 @@
 /// Erreurs de validation renvoyées sous forme de codes : la traduction en
 /// message est faite par l'interface, ce qui garde ces règles testables
 /// sans dépendre de la langue.
-enum ValidationError { required, tooShort, invalidEmail, invalidPostalCode }
+enum ValidationError { required, tooShort, invalidPhone }
 
 abstract final class Validators {
-  static final _emailRegExp = RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]{2,}$');
-  static final _postalCodeRegExp = RegExp(r'^\d{5}$');
+  /// Mobile au Congo-Brazzaville : 9 chiffres commençant par 04, 05 ou 06
+  /// (Airtel / MTN), avec ou sans indicatif +242 / 00242.
+  static final _phoneRegExp = RegExp(r'^(?:\+242|00242)?0[456]\d{7}$');
 
   static ValidationError? required(String? value) =>
       (value == null || value.trim().isEmpty) ? ValidationError.required : null;
@@ -16,20 +17,10 @@ abstract final class Validators {
     return value!.trim().length < 2 ? ValidationError.tooShort : null;
   }
 
-  static ValidationError? email(String? value) {
+  static ValidationError? phone(String? value) {
     final error = required(value);
     if (error != null) return error;
-    return _emailRegExp.hasMatch(value!.trim())
-        ? null
-        : ValidationError.invalidEmail;
-  }
-
-  /// Code postal français : exactement 5 chiffres.
-  static ValidationError? postalCode(String? value) {
-    final error = required(value);
-    if (error != null) return error;
-    return _postalCodeRegExp.hasMatch(value!.trim())
-        ? null
-        : ValidationError.invalidPostalCode;
+    final compact = value!.replaceAll(RegExp(r'[\s.\-]'), '');
+    return _phoneRegExp.hasMatch(compact) ? null : ValidationError.invalidPhone;
   }
 }

@@ -22,17 +22,19 @@ class CheckoutScreen extends HookConsumerWidget {
     final l10n = context.l10n;
     final formKey = useMemoized(GlobalKey<FormState>.new);
     final fullName = useTextEditingController();
-    final email = useTextEditingController();
+    final phone = useTextEditingController();
+    final district = useTextEditingController();
     final street = useTextEditingController();
-    final postalCode = useTextEditingController();
-    final city = useTextEditingController();
+    final city = useState(deliveryCities.first);
+    final payment = useState(PaymentMethod.mtnMobileMoney);
 
-    // Pré-remplit nom et e-mail depuis le profil dès qu'il est disponible.
+    // Pré-remplit nom, téléphone et ville depuis le profil.
     final user = ref.watch(userProfileProvider.select((u) => u.value));
     useEffect(() {
       if (user != null) {
         if (fullName.text.isEmpty) fullName.text = user.name;
-        if (email.text.isEmpty) email.text = user.email;
+        if (phone.text.isEmpty) phone.text = user.phone;
+        if (deliveryCities.contains(user.city)) city.value = user.city;
       }
       return null;
     }, [user]);
@@ -57,11 +59,12 @@ class CheckoutScreen extends HookConsumerWidget {
           .submit(
             ShippingAddress(
               fullName: fullName.text.trim(),
-              email: email.text.trim(),
+              phone: phone.text.trim(),
+              city: city.value,
+              district: district.text.trim(),
               street: street.text.trim(),
-              postalCode: postalCode.text.trim(),
-              city: city.text.trim(),
             ),
+            paymentMethod: payment.value,
           );
       if (order != null && context.mounted) {
         context.go(AppRoutes.orderConfirmation(order.id));
@@ -91,81 +94,102 @@ class CheckoutScreen extends HookConsumerWidget {
         key: formKey,
         child: AutofillGroup(
           child: ListView(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
             children: [
-              _Field(
-                controller: fullName,
-                label: l10n.fieldFullName,
-                validator: validate(Validators.fullName),
-                autofillHints: const [AutofillHints.name],
-                textCapitalization: TextCapitalization.words,
-              ),
-              _Field(
-                controller: email,
-                label: l10n.fieldEmail,
-                validator: validate(Validators.email),
-                autofillHints: const [AutofillHints.email],
-                keyboardType: TextInputType.emailAddress,
-              ),
-              _Field(
-                controller: street,
-                label: l10n.fieldStreet,
-                validator: validate(Validators.required),
-                autofillHints: const [AutofillHints.streetAddressLine1],
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              _Section(
+                icon: Icons.location_on_outlined,
+                title: l10n.sectionDelivery,
                 children: [
-                  Expanded(
-                    flex: 2,
-                    child: _Field(
-                      controller: postalCode,
-                      label: l10n.fieldPostalCode,
-                      validator: validate(Validators.postalCode),
-                      autofillHints: const [AutofillHints.postalCode],
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        LengthLimitingTextInputFormatter(5),
+                  _Field(
+                    controller: fullName,
+                    label: l10n.fieldFullName,
+                    validator: validate(Validators.fullName),
+                    autofillHints: const [AutofillHints.name],
+                    textCapitalization: TextCapitalization.words,
+                  ),
+                  _Field(
+                    controller: phone,
+                    label: l10n.fieldPhone,
+                    hint: l10n.fieldPhoneHint,
+                    validator: validate(Validators.phone),
+                    autofillHints: const [AutofillHints.telephoneNumber],
+                    keyboardType: TextInputType.phone,
+                    prefixText: '+242 ',
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9+ ]')),
+                      LengthLimitingTextInputFormatter(17),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: DropdownButtonFormField<String>(
+                      initialValue: city.value,
+                      decoration: InputDecoration(labelText: l10n.fieldCity),
+                      items: [
+                        for (final name in deliveryCities)
+                          DropdownMenuItem(value: name, child: Text(name)),
+                      ],
+                      onChanged: (value) {
+                        if (value != null) city.value = value;
+                      },
+                    ),
+                  ),
+                  _Field(
+                    controller: district,
+                    label: l10n.fieldDistrict,
+                    hint: l10n.fieldDistrictHint,
+                    validator: validate(Validators.required),
+                    textCapitalization: TextCapitalization.words,
+                  ),
+                  _Field(
+                    controller: street,
+                    label: l10n.fieldStreet,
+                    hint: l10n.fieldStreetHint,
+                    validator: validate(Validators.required),
+                    autofillHints: const [AutofillHints.streetAddressLine1],
+                    textInputAction: TextInputAction.done,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              _Section(
+                icon: Icons.account_balance_wallet_outlined,
+                title: l10n.sectionPayment,
+                children: [
+                  RadioGroup<PaymentMethod>(
+                    groupValue: payment.value,
+                    onChanged: (value) {
+                      if (value != null) payment.value = value;
+                    },
+                    child: Column(
+                      children: [
+                        for (final method in PaymentMethod.values)
+                          _PaymentOption(
+                            method: method,
+                            selected: payment.value == method,
+                          ),
                       ],
                     ),
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    flex: 3,
-                    child: _Field(
-                      controller: city,
-                      label: l10n.fieldCity,
-                      validator: validate(Validators.required),
-                      autofillHints: const [AutofillHints.addressCity],
-                      textInputAction: TextInputAction.done,
-                      onSubmitted: (_) => submit(),
-                    ),
+                  Row(
+                    children: [
+                      const Icon(Icons.info_outline, size: 18),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          l10n.paymentNotice,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
-              Semantics(
-                header: true,
-                child: Text(
-                  l10n.orderSummary,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-              ),
-              const SizedBox(height: 8),
-              OrderSummary(pricing: pricing),
               const SizedBox(height: 16),
-              Row(
-                children: [
-                  const Icon(Icons.info_outline, size: 18),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      l10n.paymentNotice,
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ),
-                ],
+              _Section(
+                icon: Icons.receipt_long_outlined,
+                title: l10n.orderSummary,
+                children: [OrderSummary(pricing: pricing)],
               ),
             ],
           ),
@@ -175,6 +199,10 @@ class CheckoutScreen extends HookConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
           child: FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              foregroundColor: Theme.of(context).colorScheme.onSecondary,
+            ),
             onPressed: isSubmitting ? null : submit,
             child: isSubmitting
                 ? Row(
@@ -188,8 +216,109 @@ class CheckoutScreen extends HookConsumerWidget {
                       Text(l10n.placingOrder),
                     ],
                   )
+                : Text(l10n.placeOrder(context.formatPrice(pricing.total))),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _Section extends StatelessWidget {
+  const _Section({
+    required this.icon,
+    required this.title,
+    required this.children,
+  });
+
+  final IconData icon;
+  final String title;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Semantics(
+              header: true,
+              child: Row(
+                children: [
+                  Icon(icon, color: theme.colorScheme.secondary),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(title, style: theme.textTheme.titleMedium),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 14),
+            ...children,
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PaymentOption extends StatelessWidget {
+  const _PaymentOption({required this.method, required this.selected});
+
+  final PaymentMethod method;
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final colors = Theme.of(context).colorScheme;
+    // Pastilles de couleur génériques (pas de logo de marque).
+    final (badgeColor, badgeText, badgeForeground) = switch (method) {
+      PaymentMethod.mtnMobileMoney => (
+        const Color(0xFFFFCB05),
+        'MTN',
+        Colors.black,
+      ),
+      PaymentMethod.airtelMoney => (const Color(0xFFD7141A), 'A', Colors.white),
+      PaymentMethod.cashOnDelivery => (colors.primary, 'F', colors.onPrimary),
+    };
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: RadioListTile<PaymentMethod>(
+        value: method,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(
+            color: selected ? colors.primary : colors.outlineVariant,
+            width: selected ? 2 : 1,
+          ),
+        ),
+        tileColor: selected
+            ? colors.primaryContainer.withValues(alpha: 0.35)
+            : null,
+        title: Text(method.label(l10n)),
+        subtitle: Text(method.hint(l10n)),
+        secondary: ExcludeSemantics(
+          child: CircleAvatar(
+            radius: 20,
+            backgroundColor: badgeColor,
+            child: method == PaymentMethod.cashOnDelivery
+                ? Icon(
+                    Icons.payments_outlined,
+                    color: badgeForeground,
+                    size: 20,
+                  )
                 : Text(
-                    l10n.placeOrder(context.formatPrice(pricing.totalInCents)),
+                    badgeText,
+                    style: TextStyle(
+                      color: badgeForeground,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 12,
+                    ),
                   ),
           ),
         ),
@@ -203,23 +332,25 @@ class _Field extends StatelessWidget {
     required this.controller,
     required this.label,
     required this.validator,
+    this.hint,
+    this.prefixText,
     this.autofillHints,
     this.keyboardType,
     this.inputFormatters,
     this.textCapitalization = TextCapitalization.none,
     this.textInputAction = TextInputAction.next,
-    this.onSubmitted,
   });
 
   final TextEditingController controller;
   final String label;
+  final String? hint;
+  final String? prefixText;
   final FormFieldValidator<String> validator;
   final Iterable<String>? autofillHints;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
   final TextCapitalization textCapitalization;
   final TextInputAction textInputAction;
-  final ValueChanged<String>? onSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -227,14 +358,17 @@ class _Field extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 12),
       child: TextFormField(
         controller: controller,
-        decoration: InputDecoration(labelText: label),
+        decoration: InputDecoration(
+          labelText: label,
+          hintText: hint,
+          prefixText: prefixText,
+        ),
         validator: validator,
         autofillHints: autofillHints,
         keyboardType: keyboardType,
         inputFormatters: inputFormatters,
         textCapitalization: textCapitalization,
         textInputAction: textInputAction,
-        onFieldSubmitted: onSubmitted,
       ),
     );
   }

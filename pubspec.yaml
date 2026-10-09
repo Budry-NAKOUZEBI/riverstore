@@ -1,8 +1,8 @@
 name: riverstore
-description: "RiverStore — application e-commerce Flutter production-ready (Riverpod, hooks, go_router, i18n FR/EN)."
+description: "RiverStore — boutique en ligne Flutter pour le Congo-Brazzaville (FCFA, Mobile Money, i18n FR/EN)."
 publish_to: 'none'
 
-version: 2.0.0+4
+version: 2.1.0+5
 
 environment:
   sdk: '>=3.8.0 <4.0.0'
@@ -33,3 +33,25 @@ flutter:
   generate: true
   assets:
     - assets/data/products.json
+    - assets/fonts/OFL-BricolageGrotesque.txt
+    - assets/fonts/OFL-PlusJakartaSans.txt
+  fonts:
+    - family: BricolageGrotesque
+      fonts:
+        - asset: assets/fonts/BricolageGrotesque-600.ttf
+          weight: 600
+        - asset: assets/fonts/BricolageGrotesque-700.ttf
+          weight: 700
+        - asset: assets/fonts/BricolageGrotesque-800.ttf
+          weight: 800
+    - family: PlusJakartaSans
+      fonts:
+        - asset: assets/fonts/PlusJakartaSans-400.ttf
+        - asset: assets/fonts/PlusJakartaSans-500.ttf
+          weight: 500
+        - asset: assets/fonts/PlusJakartaSans-600.ttf
+          weight: 600
+        - asset: assets/fonts/PlusJakartaSans-700.ttf
+          weight: 700
+        - asset: assets/fonts/PlusJakartaSans-800.ttf
+          weight: 800

@@ -1,1 +1,1 @@
-enum ProductCategory { clothing, shoes, electronics, accessories, home }
+enum ProductCategory { fashion, shoes, electronics, home, crafts }

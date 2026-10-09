@@ -50,9 +50,9 @@ List<Product> applyFilterAndSort(
     case SortOption.relevance:
       break;
     case SortOption.priceLowToHigh:
-      result.sort((a, b) => a.priceInCents.compareTo(b.priceInCents));
+      result.sort((a, b) => a.price.compareTo(b.price));
     case SortOption.priceHighToLow:
-      result.sort((a, b) => b.priceInCents.compareTo(a.priceInCents));
+      result.sort((a, b) => b.price.compareTo(a.price));
     case SortOption.ratingHighToLow:
       result.sort((a, b) => b.rating.compareTo(a.rating));
     case SortOption.nameAToZ:

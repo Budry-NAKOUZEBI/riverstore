@@ -10,7 +10,9 @@ import '../helpers/fakes.dart';
 import '../helpers/pump_app.dart';
 
 void main() {
-  testWidgets('shows a loader, then the product grid', (tester) async {
+  testWidgets('shows a loader, then the welcome banner and product grid', (
+    tester,
+  ) async {
     final repository = FakeProductRepository()..gate = Completer<void>();
     await tester.pumpLocalized(
       const CatalogScreen(),
@@ -22,15 +24,19 @@ void main() {
     repository.gate!.complete();
     await tester.pumpAndSettle();
 
+    expect(find.text('Mbote, Grâce'), findsOneWidget);
+    expect(find.text('Livraison offerte dès 50 000 FCFA'), findsOneWidget);
     expect(find.byType(ProductCard), findsNWidgets(4));
-    expect(find.text('Casque audio'), findsOneWidget);
+    expect(find.text('Pagne wax'), findsOneWidget);
   });
 
-  testWidgets('search is debounced and ignores accents', (tester) async {
+  testWidgets('search is debounced, ignores accents and hides the banner', (
+    tester,
+  ) async {
     await tester.pumpLocalized(const CatalogScreen());
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(TextField), 'ecran');
+    await tester.enterText(find.byType(TextField), 'eclairage');
     await tester.pump(searchDebounce ~/ 2);
     expect(
       find.byType(ProductCard),
@@ -41,7 +47,8 @@ void main() {
     await tester.pump(searchDebounce);
     await tester.pumpAndSettle();
     expect(find.byType(ProductCard), findsOneWidget);
-    expect(find.text('Écran incurvé'), findsOneWidget);
+    expect(find.text("Kit d'éclairage solaire"), findsOneWidget);
+    expect(find.text('Mbote, Grâce'), findsNothing);
   });
 
   testWidgets('category chips filter and the empty state resets filters', (
@@ -79,6 +86,8 @@ void main() {
     expect(find.text('Impossible de charger les produits.'), findsOneWidget);
 
     repository.error = null;
+    await tester.ensureVisible(find.text('Réessayer'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Réessayer'));
     await tester.pumpAndSettle();
 

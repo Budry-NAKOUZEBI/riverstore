@@ -2,239 +2,290 @@
   {
     "id": "p1",
     "name": {
-      "fr": "Veste en jean oversize",
-      "en": "Oversized denim jacket"
+      "fr": "Pagne wax hollandais 6 yards",
+      "en": "Dutch wax print fabric, 6 yards"
     },
     "description": {
-      "fr": "Veste en denim brut à coupe ample, doublure douce et boutons pression.",
-      "en": "Raw denim jacket with a relaxed fit, soft lining and snap buttons."
+      "fr": "Pagne wax 100 % coton aux motifs éclatants, vendu en coupon de 6 yards : de quoi confectionner une tenue complète chez votre couturier.",
+      "en": "Vibrant 100% cotton wax print sold as a 6-yard piece: enough for a full outfit made by your tailor."
     },
-    "price": 59.9,
-    "category": "clothing",
-    "imageUrl": "https://picsum.photos/seed/p1/800/800",
-    "thumbnailUrl": "https://picsum.photos/seed/p1/400/400",
-    "rating": 4.3,
-    "stock": 12
+    "price": 18000,
+    "category": "fashion",
+    "imageUrl": "https://images.pexels.com/photos/30971566/pexels-photo-30971566.jpeg?auto=compress&cs=tinysrgb&w=900&h=900&fit=crop",
+    "thumbnailUrl": "https://images.pexels.com/photos/30971566/pexels-photo-30971566.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop",
+    "rating": 4.7,
+    "stock": 25
   },
   {
     "id": "p2",
     "name": {
-      "fr": "T-shirt col rond coton bio",
-      "en": "Organic cotton crew-neck T-shirt"
+      "fr": "Robe cintrée en pagne",
+      "en": "Fitted wax print dress"
     },
     "description": {
-      "fr": "T-shirt basique en coton biologique certifié, coupe droite intemporelle.",
-      "en": "Basic T-shirt in certified organic cotton, timeless straight cut."
+      "fr": "Robe cintrée à manches longues, coupée dans un pagne aux tons bleus et jaunes. Confection locale, finitions soignées.",
+      "en": "Long-sleeved fitted dress cut from a blue and yellow wax print. Locally tailored with careful finishing."
     },
-    "price": 19.9,
-    "category": "clothing",
-    "imageUrl": "https://picsum.photos/seed/p2/800/800",
-    "thumbnailUrl": "https://picsum.photos/seed/p2/400/400",
+    "price": 25000,
+    "category": "fashion",
+    "imageUrl": "https://images.pexels.com/photos/30247274/pexels-photo-30247274.jpeg?auto=compress&cs=tinysrgb&w=900&h=900&fit=crop",
+    "thumbnailUrl": "https://images.pexels.com/photos/30247274/pexels-photo-30247274.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop",
     "rating": 4.6,
-    "stock": 40
+    "stock": 12
   },
   {
     "id": "p3",
     "name": {
-      "fr": "Sneakers running Aero",
-      "en": "Aero running sneakers"
+      "fr": "Ensemble pagne et collier perlé",
+      "en": "Wax print outfit with beaded necklace"
     },
     "description": {
-      "fr": "Chaussures de course légères avec semelle amortissante et mesh respirant.",
-      "en": "Lightweight running shoes with a cushioned sole and breathable mesh."
+      "fr": "Ensemble jupe et haut en pagne aux motifs géométriques, accompagné de son collier de perles fait main.",
+      "en": "Skirt and top set in a geometric wax print, paired with a handmade beaded necklace."
     },
-    "price": 89.0,
-    "category": "shoes",
-    "imageUrl": "https://picsum.photos/seed/p3/800/800",
-    "thumbnailUrl": "https://picsum.photos/seed/p3/400/400",
-    "rating": 4.5,
+    "price": 32000,
+    "category": "fashion",
+    "imageUrl": "https://images.pexels.com/photos/7657229/pexels-photo-7657229.jpeg?auto=compress&cs=tinysrgb&w=900&h=900&fit=crop",
+    "thumbnailUrl": "https://images.pexels.com/photos/7657229/pexels-photo-7657229.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop",
+    "rating": 4.8,
     "stock": 8
   },
   {
     "id": "p4",
     "name": {
-      "fr": "Bottines cuir suédé",
-      "en": "Suede leather ankle boots"
+      "fr": "Chemise homme en batik",
+      "en": "Men's batik shirt"
     },
     "description": {
-      "fr": "Bottines en cuir suédé véritable, semelle antidérapante et doublure chaude.",
-      "en": "Genuine suede ankle boots with a non-slip sole and warm lining."
+      "fr": "Chemise manches courtes en coton teint à la main (batik), col tunisien et plastron brodé. Idéale sous la chaleur de Brazzaville.",
+      "en": "Short-sleeved hand-dyed cotton batik shirt with a band collar and embroidered front. Ideal in Brazzaville's heat."
     },
-    "price": 129.0,
-    "category": "shoes",
-    "imageUrl": "https://picsum.photos/seed/p4/800/800",
-    "thumbnailUrl": "https://picsum.photos/seed/p4/400/400",
-    "rating": 4.1,
-    "stock": 5
+    "price": 15000,
+    "category": "fashion",
+    "imageUrl": "https://images.pexels.com/photos/18028385/pexels-photo-18028385.jpeg?auto=compress&cs=tinysrgb&w=900&h=900&fit=crop",
+    "thumbnailUrl": "https://images.pexels.com/photos/18028385/pexels-photo-18028385.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop",
+    "rating": 4.4,
+    "stock": 30
   },
   {
     "id": "p5",
     "name": {
-      "fr": "Casque audio sans fil",
-      "en": "Wireless headphones"
+      "fr": "Boubou brodé trois pièces",
+      "en": "Three-piece embroidered boubou"
     },
     "description": {
-      "fr": "Casque Bluetooth à réduction de bruit active, 30h d'autonomie.",
-      "en": "Bluetooth headphones with active noise cancellation and 30h battery life."
+      "fr": "Grand boubou bleu ciel brodé de fils dorés, livré avec tunique et pantalon. Pour les mariages, dots et cérémonies.",
+      "en": "Sky-blue grand boubou embroidered with gold thread, with tunic and trousers. For weddings, dowry ceremonies and celebrations."
     },
-    "price": 79.9,
-    "category": "electronics",
-    "imageUrl": "https://picsum.photos/seed/p5/800/800",
-    "thumbnailUrl": "https://picsum.photos/seed/p5/400/400",
+    "price": 45000,
+    "category": "fashion",
+    "imageUrl": "https://images.pexels.com/photos/8526759/pexels-photo-8526759.jpeg?auto=compress&cs=tinysrgb&w=900&h=900&fit=crop",
+    "thumbnailUrl": "https://images.pexels.com/photos/8526759/pexels-photo-8526759.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop",
     "rating": 4.7,
-    "stock": 15
+    "stock": 6
   },
   {
     "id": "p6",
     "name": {
-      "fr": "Montre connectée Sport",
-      "en": "Sport smartwatch"
+      "fr": "Costume trois-pièces « La Sape »",
+      "en": "Three-piece \"La Sape\" suit"
     },
     "description": {
-      "fr": "Suivi d'activité, notifications et mesure de la fréquence cardiaque.",
-      "en": "Activity tracking, notifications and heart-rate monitoring."
+      "fr": "Costume trois-pièces en laine chocolat, gilet assorti, coupe ajustée. L'élégance des sapeurs de Bacongo, sur mesure possible.",
+      "en": "Chocolate wool three-piece suit with matching waistcoat and a tailored fit. The elegance of Bacongo's sapeurs, made-to-measure available."
     },
-    "price": 149.0,
-    "category": "electronics",
-    "imageUrl": "https://picsum.photos/seed/p6/800/800",
-    "thumbnailUrl": "https://picsum.photos/seed/p6/400/400",
-    "rating": 4.2,
-    "stock": 10
+    "price": 120000,
+    "category": "fashion",
+    "imageUrl": "https://images.pexels.com/photos/6757964/pexels-photo-6757964.jpeg?auto=compress&cs=tinysrgb&w=900&h=900&fit=crop",
+    "thumbnailUrl": "https://images.pexels.com/photos/6757964/pexels-photo-6757964.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop",
+    "rating": 4.9,
+    "stock": 4
   },
   {
     "id": "p7",
     "name": {
-      "fr": "Sac à dos urbain 20L",
-      "en": "Urban backpack 20L"
+      "fr": "Richelieus en cuir fauve",
+      "en": "Tan leather brogues"
     },
     "description": {
-      "fr": "Sac à dos compact avec compartiment ordinateur portable et poches étanches.",
-      "en": "Compact backpack with a laptop compartment and waterproof pockets."
+      "fr": "Richelieus à bout fleuri en cuir pleine fleur, semelle cousue. Le complément indispensable d'un costume de sapeur.",
+      "en": "Full-grain leather wingtip brogues with a stitched sole. The essential match for a sapeur's suit."
     },
-    "price": 45.5,
-    "category": "accessories",
-    "imageUrl": "https://picsum.photos/seed/p7/800/800",
-    "thumbnailUrl": "https://picsum.photos/seed/p7/400/400",
-    "rating": 4.4,
-    "stock": 20
+    "price": 45000,
+    "category": "shoes",
+    "imageUrl": "https://images.pexels.com/photos/4637874/pexels-photo-4637874.jpeg?auto=compress&cs=tinysrgb&w=900&h=900&fit=crop",
+    "thumbnailUrl": "https://images.pexels.com/photos/4637874/pexels-photo-4637874.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop",
+    "rating": 4.6,
+    "stock": 10
   },
   {
     "id": "p8",
     "name": {
-      "fr": "Ceinture cuir réversible",
-      "en": "Reversible leather belt"
+      "fr": "Sandales en cuir artisanales",
+      "en": "Handmade leather sandals"
     },
     "description": {
-      "fr": "Ceinture réversible noir/marron en cuir véritable avec boucle amovible.",
-      "en": "Reversible black/brown genuine leather belt with a removable buckle."
+      "fr": "Mules en cuir tannées et cousues à la main par des artisans de Poto-Poto, boucle en laiton. Plusieurs coloris.",
+      "en": "Leather slides tanned and hand-stitched by Poto-Poto craftsmen, with a brass buckle. Several colours available."
     },
-    "price": 29.9,
-    "category": "accessories",
-    "imageUrl": "https://picsum.photos/seed/p8/800/800",
-    "thumbnailUrl": "https://picsum.photos/seed/p8/400/400",
-    "rating": 3.9,
-    "stock": 0
+    "price": 12500,
+    "category": "shoes",
+    "imageUrl": "https://images.pexels.com/photos/31451006/pexels-photo-31451006.jpeg?auto=compress&cs=tinysrgb&w=900&h=900&fit=crop",
+    "thumbnailUrl": "https://images.pexels.com/photos/31451006/pexels-photo-31451006.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop",
+    "rating": 4.5,
+    "stock": 20
   },
   {
     "id": "p9",
     "name": {
-      "fr": "Lampe de bureau LED",
-      "en": "LED desk lamp"
+      "fr": "Baskets de ville blanches",
+      "en": "White city sneakers"
     },
     "description": {
-      "fr": "Lampe LED à intensité réglable avec port de charge USB intégré.",
-      "en": "Dimmable LED lamp with a built-in USB charging port."
+      "fr": "Baskets légères en mesh respirant, semelle amortissante. Confortables pour les longues journées en ville.",
+      "en": "Lightweight breathable mesh sneakers with a cushioned sole. Comfortable for long days in town."
     },
-    "price": 34.9,
-    "category": "home",
-    "imageUrl": "https://picsum.photos/seed/p9/800/800",
-    "thumbnailUrl": "https://picsum.photos/seed/p9/400/400",
-    "rating": 4.0,
-    "stock": 18
+    "price": 28000,
+    "category": "shoes",
+    "imageUrl": "https://images.pexels.com/photos/1464625/pexels-photo-1464625.jpeg?auto=compress&cs=tinysrgb&w=900&h=900&fit=crop",
+    "thumbnailUrl": "https://images.pexels.com/photos/1464625/pexels-photo-1464625.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop",
+    "rating": 4.3,
+    "stock": 15
   },
   {
     "id": "p10",
     "name": {
-      "fr": "Coussin décoratif velours",
-      "en": "Velvet throw pillow"
+      "fr": "Smartphone Android 128 Go",
+      "en": "Android smartphone, 128 GB"
     },
     "description": {
-      "fr": "Coussin en velours doux, housse déhoussable et lavable en machine.",
-      "en": "Soft velvet pillow with a removable, machine-washable cover."
+      "fr": "Écran 6,6\", double SIM (MTN et Airtel), batterie 5 000 mAh et 128 Go de stockage. Garantie 12 mois.",
+      "en": "6.6\" screen, dual SIM (MTN and Airtel), 5,000 mAh battery and 128 GB storage. 12-month warranty."
     },
-    "price": 22.0,
-    "category": "home",
-    "imageUrl": "https://picsum.photos/seed/p10/800/800",
-    "thumbnailUrl": "https://picsum.photos/seed/p10/400/400",
-    "rating": 4.3,
-    "stock": 30
+    "price": 95000,
+    "category": "electronics",
+    "imageUrl": "https://images.pexels.com/photos/215582/pexels-photo-215582.jpeg?auto=compress&cs=tinysrgb&w=900&h=900&fit=crop",
+    "thumbnailUrl": "https://images.pexels.com/photos/215582/pexels-photo-215582.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop",
+    "rating": 4.4,
+    "stock": 9
   },
   {
     "id": "p11",
     "name": {
-      "fr": "Robe d'été fleurie",
-      "en": "Floral summer dress"
+      "fr": "Batterie externe 20 000 mAh",
+      "en": "20,000 mAh power bank"
     },
     "description": {
-      "fr": "Robe légère en viscose à motifs floraux, idéale pour la saison chaude.",
-      "en": "Light viscose dress with a floral print, perfect for warm days."
+      "fr": "Jusqu'à 4 recharges complètes de téléphone : l'alliée des journées de délestage. Deux ports USB et un port USB-C.",
+      "en": "Up to 4 full phone charges: your ally during power cuts. Two USB ports and one USB-C port."
     },
-    "price": 49.9,
-    "category": "clothing",
-    "imageUrl": "https://picsum.photos/seed/p11/800/800",
-    "thumbnailUrl": "https://picsum.photos/seed/p11/400/400",
-    "rating": 4.5,
-    "stock": 14
+    "price": 15000,
+    "category": "electronics",
+    "imageUrl": "https://images.pexels.com/photos/16814788/pexels-photo-16814788.jpeg?auto=compress&cs=tinysrgb&w=900&h=900&fit=crop",
+    "thumbnailUrl": "https://images.pexels.com/photos/16814788/pexels-photo-16814788.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop",
+    "rating": 4.6,
+    "stock": 40
   },
   {
     "id": "p12",
     "name": {
-      "fr": "Baskets basses cuir blanc",
-      "en": "White leather low-top sneakers"
+      "fr": "Kit solaire 200 W installé",
+      "en": "200 W solar kit, installed"
     },
     "description": {
-      "fr": "Baskets minimalistes en cuir blanc, semelle en caoutchouc durable.",
-      "en": "Minimalist white leather sneakers with a durable rubber sole."
+      "fr": "Panneau 200 W, batterie, régulateur et onduleur, installation comprise à Brazzaville et Pointe-Noire. Éclairage et recharges même pendant les coupures.",
+      "en": "200 W panel, battery, charge controller and inverter, installation included in Brazzaville and Pointe-Noire. Light and charging even during outages."
     },
-    "price": 99.0,
-    "category": "shoes",
-    "imageUrl": "https://picsum.photos/seed/p12/800/800",
-    "thumbnailUrl": "https://picsum.photos/seed/p12/400/400",
-    "rating": 4.6,
-    "stock": 9
+    "price": 250000,
+    "category": "electronics",
+    "imageUrl": "https://images.pexels.com/photos/8853504/pexels-photo-8853504.jpeg?auto=compress&cs=tinysrgb&w=900&h=900&fit=crop",
+    "thumbnailUrl": "https://images.pexels.com/photos/8853504/pexels-photo-8853504.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop",
+    "rating": 4.8,
+    "stock": 0
   },
   {
     "id": "p13",
     "name": {
-      "fr": "Enceinte Bluetooth portable",
-      "en": "Portable Bluetooth speaker"
+      "fr": "Ventilateur de table rechargeable",
+      "en": "Rechargeable desk fan"
     },
     "description": {
-      "fr": "Enceinte compacte étanche IPX6 avec 12h d'autonomie et son 360°.",
-      "en": "Compact IPX6 waterproof speaker with 12h battery and 360° sound."
+      "fr": "Ventilateur 12\" avec batterie intégrée : jusqu'à 8 h d'autonomie sans courant. Trois vitesses, rechargeable sur panneau solaire.",
+      "en": "12\" fan with built-in battery: up to 8 hours without mains power. Three speeds, solar-panel compatible."
     },
-    "price": 59.0,
-    "category": "electronics",
-    "imageUrl": "https://picsum.photos/seed/p13/800/800",
-    "thumbnailUrl": "https://picsum.photos/seed/p13/400/400",
-    "rating": 4.1,
-    "stock": 22
+    "price": 22000,
+    "category": "home",
+    "imageUrl": "https://images.pexels.com/photos/3675622/pexels-photo-3675622.jpeg?auto=compress&cs=tinysrgb&w=900&h=900&fit=crop",
+    "thumbnailUrl": "https://images.pexels.com/photos/3675622/pexels-photo-3675622.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop",
+    "rating": 4.2,
+    "stock": 14
   },
   {
     "id": "p14",
     "name": {
-      "fr": "Plaid tricot laine",
-      "en": "Knitted wool throw"
+      "fr": "Marmite en inox 10 L",
+      "en": "10 L stainless steel pot"
     },
     "description": {
-      "fr": "Plaid douillet en laine mélangée, parfait pour les soirées au coin du feu.",
-      "en": "Cosy wool-blend throw, perfect for evenings by the fire."
+      "fr": "Grande marmite en acier inoxydable avec couvercle, parfaite pour le saka-saka, le poisson salé ou le riz des jours de fête.",
+      "en": "Large stainless steel pot with lid, perfect for saka-saka, salted fish or festive rice."
     },
-    "price": 39.9,
+    "price": 14000,
     "category": "home",
-    "imageUrl": "https://picsum.photos/seed/p14/800/800",
-    "thumbnailUrl": "https://picsum.photos/seed/p14/400/400",
-    "rating": 4.4,
-    "stock": 11
+    "imageUrl": "https://images.pexels.com/photos/6035337/pexels-photo-6035337.jpeg?auto=compress&cs=tinysrgb&w=900&h=900&fit=crop",
+    "thumbnailUrl": "https://images.pexels.com/photos/6035337/pexels-photo-6035337.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop",
+    "rating": 4.3,
+    "stock": 18
+  },
+  {
+    "id": "p15",
+    "name": {
+      "fr": "Paniers tressés traditionnels",
+      "en": "Traditional woven baskets"
+    },
+    "description": {
+      "fr": "Lot de paniers tressés à la main en fibres naturelles, avec couvercle. Rangement ou décoration, chaque pièce est unique.",
+      "en": "Set of hand-woven natural-fibre baskets with lids. For storage or decoration, each piece is unique."
+    },
+    "price": 8000,
+    "category": "crafts",
+    "imageUrl": "https://images.pexels.com/photos/31794673/pexels-photo-31794673.jpeg?auto=compress&cs=tinysrgb&w=900&h=900&fit=crop",
+    "thumbnailUrl": "https://images.pexels.com/photos/31794673/pexels-photo-31794673.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop",
+    "rating": 4.5,
+    "stock": 25
+  },
+  {
+    "id": "p16",
+    "name": {
+      "fr": "Masque et sculptures en bois",
+      "en": "Wooden mask and carvings"
+    },
+    "description": {
+      "fr": "Masque et statuettes sculptés dans le bois par des artisans du marché de Plateau. Pièces uniques, certificat d'origine fourni.",
+      "en": "Mask and figurines carved in wood by artisans from the Plateau market. Unique pieces with a certificate of origin."
+    },
+    "price": 35000,
+    "category": "crafts",
+    "imageUrl": "https://images.pexels.com/photos/35187492/pexels-photo-35187492.jpeg?auto=compress&cs=tinysrgb&w=900&h=900&fit=crop",
+    "thumbnailUrl": "https://images.pexels.com/photos/35187492/pexels-photo-35187492.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop",
+    "rating": 4.6,
+    "stock": 5
+  },
+  {
+    "id": "p17",
+    "name": {
+      "fr": "Toile d'un peintre de Brazzaville",
+      "en": "Canvas by a Brazzaville painter"
+    },
+    "description": {
+      "fr": "Peinture acrylique sur toile (60 × 80 cm) aux couleurs vives, signée par un jeune artiste de Brazzaville.",
+      "en": "Vivid acrylic painting on canvas (60 × 80 cm), signed by a young Brazzaville artist."
+    },
+    "price": 60000,
+    "category": "crafts",
+    "imageUrl": "https://images.pexels.com/photos/1269968/pexels-photo-1269968.jpeg?auto=compress&cs=tinysrgb&w=900&h=900&fit=crop",
+    "thumbnailUrl": "https://images.pexels.com/photos/1269968/pexels-photo-1269968.jpeg?auto=compress&cs=tinysrgb&w=480&h=480&fit=crop",
+    "rating": 4.7,
+    "stock": 3
   }
 ]

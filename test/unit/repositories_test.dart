@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:riverstore/src/data/models/cart.dart';
+import 'package:riverstore/src/data/models/order.dart';
 import 'package:riverstore/src/data/repositories/order_repository.dart';
 import 'package:riverstore/src/data/repositories/product_repository.dart';
 
@@ -14,8 +15,8 @@ void main() {
 
     test('parses the bundled catalog', () {
       final products = AssetProductRepository.parseProducts(raw);
-      expect(products, hasLength(14));
-      expect(products.map((p) => p.id).toSet(), hasLength(14));
+      expect(products, hasLength(17));
+      expect(products.map((p) => p.id).toSet(), hasLength(17));
     });
 
     test('every product is translated in French and English', () {
@@ -28,7 +29,9 @@ void main() {
           );
           expect(text.values.values.every((v) => v.isNotEmpty), isTrue);
         }
-        expect(product.priceInCents, greaterThan(0));
+        // Prix réalistes en FCFA, arrondis à 500 FCFA près.
+        expect(product.price, greaterThanOrEqualTo(1000));
+        expect(product.price % 500, 0, reason: product.id);
         expect(product.thumbnailUrl, isNot(product.imageUrl));
       }
     });
@@ -43,19 +46,25 @@ void main() {
 
     test('creates an order with an id, pricing and timestamp', () async {
       final order = await repository.placeOrder(
-        items: [CartItem(product: lamp, quantity: 2)],
+        items: [CartItem(product: pot, quantity: 2)],
         address: testAddress,
+        paymentMethod: PaymentMethod.airtelMoney,
       );
       expect(order.id, startsWith('RS-'));
       expect(order.placedAt, placedAt);
       expect(order.itemCount, 2);
-      expect(order.pricing.subtotalInCents, 4980);
-      expect(order.pricing.totalInCents, 4980 + 490);
+      expect(order.paymentMethod, PaymentMethod.airtelMoney);
+      expect(order.pricing.subtotal, 28000);
+      expect(order.pricing.total, 30000);
     });
 
     test('refuses an empty cart', () {
       expect(
-        repository.placeOrder(items: const [], address: testAddress),
+        repository.placeOrder(
+          items: const [],
+          address: testAddress,
+          paymentMethod: PaymentMethod.cashOnDelivery,
+        ),
         throwsA(isA<EmptyCartException>()),
       );
     });

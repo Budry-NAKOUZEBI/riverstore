@@ -49,7 +49,10 @@ class CartItemTile extends ConsumerWidget {
         direction: DismissDirection.endToStart,
         onDismissed: (_) => remove(),
         background: Container(
-          color: Theme.of(context).colorScheme.errorContainer,
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.errorContainer,
+            borderRadius: BorderRadius.circular(22),
+          ),
           alignment: Alignment.centerRight,
           padding: const EdgeInsets.only(right: 24),
           child: Icon(
@@ -57,28 +60,52 @@ class CartItemTile extends ConsumerWidget {
             color: Theme.of(context).colorScheme.onErrorContainer,
           ),
         ),
-        child: ListTile(
-          contentPadding: const EdgeInsets.only(left: 16, right: 4),
-          leading: ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: SizedBox.square(
-              dimension: 56,
-              child: ProductImage(url: product.thumbnailUrl),
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(14),
+                  child: SizedBox.square(
+                    dimension: 72,
+                    child: ProductImage(url: product.thumbnailUrl),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        l10n.cartItemSubtitle(
+                          context.formatPrice(product.price),
+                          context.formatPrice(item.subtotal),
+                        ),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      QuantityStepper(
+                        quantity: item.quantity,
+                        max: product.stock,
+                        productName: name,
+                        onIncrement: () => notifier.increment(productId),
+                        onDecrement: () => notifier.decrement(productId),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ),
-          title: Text(name, maxLines: 1, overflow: TextOverflow.ellipsis),
-          subtitle: Text(
-            l10n.cartItemSubtitle(
-              context.formatPrice(product.priceInCents),
-              context.formatPrice(item.subtotalInCents),
-            ),
-          ),
-          trailing: QuantityStepper(
-            quantity: item.quantity,
-            max: product.stock,
-            productName: name,
-            onIncrement: () => notifier.increment(productId),
-            onDecrement: () => notifier.decrement(productId),
           ),
         ),
       ),

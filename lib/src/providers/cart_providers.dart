@@ -68,6 +68,5 @@ final cartItemProvider = Provider.family<CartItem?, String>(
 );
 
 final cartPricingProvider = Provider<OrderPricing>(
-  (ref) =>
-      OrderPricing(subtotalInCents: ref.watch(cartProvider).subtotalInCents),
+  (ref) => OrderPricing(subtotal: ref.watch(cartProvider).subtotal),
 );

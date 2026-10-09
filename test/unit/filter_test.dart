@@ -18,33 +18,33 @@ List<String> ids(ProductFilter filter, {String language = 'fr'}) =>
 void main() {
   group('applyFilterAndSort', () {
     test('filters by category', () {
-      expect(ids(const ProductFilter(category: ProductCategory.electronics)), [
+      expect(ids(const ProductFilter(category: ProductCategory.fashion)), [
         'p1',
-        'p4',
       ]);
+      expect(ids(const ProductFilter(category: ProductCategory.crafts)), []);
     });
 
     test('search ignores case and accents', () {
-      expect(ids(const ProductFilter(searchQuery: 'ECRAN')), ['p4']);
+      expect(ids(const ProductFilter(searchQuery: 'ECLAIRAGE')), ['p4']);
     });
 
     test('search matches names in every language', () {
-      expect(ids(const ProductFilter(searchQuery: 'desk')), ['p3']);
-      expect(ids(const ProductFilter(searchQuery: 'lampe')), ['p3']);
+      expect(ids(const ProductFilter(searchQuery: 'steel')), ['p3']);
+      expect(ids(const ProductFilter(searchQuery: 'marmite')), ['p3']);
     });
 
     test('sorts by price in both directions', () {
       expect(ids(const ProductFilter(sortOption: SortOption.priceLowToHigh)), [
+        'p2',
         'p3',
         'p1',
-        'p2',
         'p4',
       ]);
       expect(ids(const ProductFilter(sortOption: SortOption.priceHighToLow)), [
         'p4',
-        'p2',
         'p1',
         'p3',
+        'p2',
       ]);
     });
 
@@ -59,10 +59,10 @@ void main() {
 
     test('sorts alphabetically in the displayed language', () {
       const filter = ProductFilter(sortOption: SortOption.nameAToZ);
-      // fr : Casque, Écran, Lampe, Sneakers
-      expect(ids(filter), ['p1', 'p4', 'p3', 'p2']);
-      // en : Curved, Desk, Headphones, Running
-      expect(ids(filter, language: 'en'), ['p4', 'p3', 'p1', 'p2']);
+      // fr : Kit d'éclairage, Marmite, Pagne, Sandales
+      expect(ids(filter), ['p4', 'p3', 'p1', 'p2']);
+      // en : Leather sandals, Solar lighting kit, Stainless steel pot, Wax
+      expect(ids(filter, language: 'en'), ['p2', 'p4', 'p3', 'p1']);
     });
   });
 
@@ -92,6 +92,7 @@ void main() {
         hasLength(4),
       );
       expect(container.read(categoriesProvider), [
+        ProductCategory.fashion,
         ProductCategory.shoes,
         ProductCategory.electronics,
         ProductCategory.home,

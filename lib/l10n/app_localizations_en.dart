@@ -51,16 +51,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get categoryAll => 'All';
 
   @override
-  String get categoryClothing => 'Clothing';
-
-  @override
   String get categoryShoes => 'Shoes';
 
   @override
-  String get categoryElectronics => 'Electronics';
-
-  @override
-  String get categoryAccessories => 'Accessories';
+  String get categoryElectronics => 'Tech';
 
   @override
   String get categoryHome => 'Home';
@@ -114,11 +108,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get productCardHint => 'view details';
-
-  @override
-  String productImageSemantics(String name) {
-    return 'Photo of $name';
-  }
 
   @override
   String ratingSemantics(String rating) {
@@ -250,7 +239,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get subtotal => 'Subtotal';
 
   @override
-  String get shipping => 'Shipping';
+  String get shipping => 'Home delivery';
 
   @override
   String get shippingFree => 'Free';
@@ -267,19 +256,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get checkout => 'Checkout';
 
   @override
-  String get checkoutTitle => 'Shipping details';
+  String get checkoutTitle => 'Delivery & payment';
 
   @override
   String get fieldFullName => 'Full name';
 
   @override
-  String get fieldEmail => 'Email';
-
-  @override
-  String get fieldStreet => 'Street address';
-
-  @override
-  String get fieldPostalCode => 'Postal code';
+  String get fieldStreet => 'Address and landmark';
 
   @override
   String get fieldCity => 'City';
@@ -289,12 +272,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorTooShort => 'Value is too short';
-
-  @override
-  String get errorInvalidEmail => 'Invalid email address';
-
-  @override
-  String get errorInvalidPostalCode => 'Invalid postal code (5 digits)';
 
   @override
   String get orderSummary => 'Order summary';
@@ -308,7 +285,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get placingOrder => 'Placing order…';
 
   @override
-  String get paymentNotice => 'Simulated payment: you will not be charged.';
+  String get paymentNotice => 'Demo: no real Mobile Money transaction is made.';
 
   @override
   String get orderFailed => 'The order could not be placed. Please try again.';
@@ -348,11 +325,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileTitle => 'Profile';
-
-  @override
-  String avatarSemantics(String name) {
-    return 'Profile picture of $name';
-  }
 
   @override
   String memberSince(DateTime date) {
@@ -417,4 +389,101 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get licenses => 'Open source licenses';
+
+  @override
+  String get categoryFashion => 'Fashion & wax';
+
+  @override
+  String get categoryCrafts => 'Crafts';
+
+  @override
+  String get heroGreeting => 'Mbote!';
+
+  @override
+  String get heroTitle => 'The best of Brazzaville, delivered to your door.';
+
+  @override
+  String get heroSubtitle =>
+      'Fashion, crafts and tech, delivered in Brazzaville, Pointe-Noire and Dolisie.';
+
+  @override
+  String heroBadge(String amount) {
+    return 'Free delivery from $amount';
+  }
+
+  @override
+  String greetingUser(String name) {
+    return 'Mbote, $name';
+  }
+
+  @override
+  String productImageSemantics(String name) {
+    return 'Photo: $name';
+  }
+
+  @override
+  String get fieldPhone => 'Phone number';
+
+  @override
+  String get fieldPhoneHint => '06 123 45 67';
+
+  @override
+  String get fieldDistrict => 'Neighbourhood / district';
+
+  @override
+  String get fieldDistrictHint => 'Bacongo, Poto-Poto, Moungali…';
+
+  @override
+  String get fieldStreetHint => 'Street, number, near…';
+
+  @override
+  String get errorInvalidPhone => 'Invalid number (e.g. 06 123 45 67)';
+
+  @override
+  String get sectionDelivery => 'Delivery address';
+
+  @override
+  String get sectionPayment => 'Payment method';
+
+  @override
+  String get paymentMtn => 'MTN Mobile Money';
+
+  @override
+  String get paymentAirtel => 'Airtel Money';
+
+  @override
+  String get paymentCash => 'Cash on delivery';
+
+  @override
+  String get paymentMobileHint =>
+      'A confirmation request is sent to your phone.';
+
+  @override
+  String get paymentCashHint => 'Pay the courier in cash on delivery.';
+
+  @override
+  String orderPaidWith(String method) {
+    return 'Payment: $method';
+  }
+
+  @override
+  String profileContact(String phone, String city) {
+    return '$phone · $city';
+  }
+
+  @override
+  String avatarSemantics(String name) {
+    return 'Initials of $name';
+  }
+
+  @override
+  String productCategoryLabel(String category) {
+    return 'Category: $category';
+  }
+
+  @override
+  String get detailDescription => 'Description';
+
+  @override
+  String get detailPrice => 'Price';
 }

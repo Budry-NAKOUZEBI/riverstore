@@ -17,9 +17,18 @@ class RatingStars extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.star_rounded, size: size, color: Colors.amber.shade700),
+            Icon(
+              Icons.star_rounded,
+              size: size,
+              color: const Color(0xFFE3A72F),
+            ),
             const SizedBox(width: 2),
-            Text(value, style: Theme.of(context).textTheme.bodySmall),
+            Text(
+              value,
+              style: Theme.of(
+                context,
+              ).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w700),
+            ),
           ],
         ),
       ),

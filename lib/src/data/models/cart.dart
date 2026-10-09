@@ -9,7 +9,7 @@ class CartItem {
   final Product product;
   final int quantity;
 
-  int get subtotalInCents => product.priceInCents * quantity;
+  int get subtotal => product.price * quantity;
 
   CartItem copyWith({int? quantity}) =>
       CartItem(product: product, quantity: quantity ?? this.quantity);
@@ -38,8 +38,8 @@ class CartState {
   int get totalQuantity =>
       items.values.fold(0, (total, item) => total + item.quantity);
 
-  int get subtotalInCents =>
-      items.values.fold(0, (total, item) => total + item.subtotalInCents);
+  int get subtotal =>
+      items.values.fold(0, (total, item) => total + item.subtotal);
 
   bool get isEmpty => items.isEmpty;
 
@@ -66,33 +66,33 @@ class ProductIdList {
   int get hashCode => Object.hashAll(ids);
 }
 
-/// Règles de tarification de la commande.
+/// Règles de tarification de la commande (montants en francs CFA).
 @immutable
 class OrderPricing {
-  const OrderPricing({required this.subtotalInCents});
+  const OrderPricing({required this.subtotal});
 
-  /// Livraison offerte à partir de 50 €.
-  static const freeShippingThresholdInCents = 5000;
-  static const standardShippingInCents = 490;
+  /// Livraison offerte à partir de 50 000 FCFA.
+  static const freeShippingThreshold = 50000;
 
-  final int subtotalInCents;
+  /// Frais de livraison à domicile (Brazzaville, Pointe-Noire, Dolisie).
+  static const deliveryFee = 2000;
 
-  int get shippingInCents =>
-      subtotalInCents == 0 || subtotalInCents >= freeShippingThresholdInCents
-      ? 0
-      : standardShippingInCents;
+  final int subtotal;
 
-  int get totalInCents => subtotalInCents + shippingInCents;
+  int get shipping =>
+      subtotal == 0 || subtotal >= freeShippingThreshold ? 0 : deliveryFee;
 
-  int get remainingForFreeShippingInCents {
-    final remaining = freeShippingThresholdInCents - subtotalInCents;
+  int get total => subtotal + shipping;
+
+  int get remainingForFreeShipping {
+    final remaining = freeShippingThreshold - subtotal;
     return remaining > 0 ? remaining : 0;
   }
 
   @override
   bool operator ==(Object other) =>
-      other is OrderPricing && other.subtotalInCents == subtotalInCents;
+      other is OrderPricing && other.subtotal == subtotal;
 
   @override
-  int get hashCode => subtotalInCents.hashCode;
+  int get hashCode => subtotal.hashCode;
 }

@@ -37,7 +37,7 @@ void main() {
     SharedPreferences.setMockInitialValues({
       SettingsStorage.languageKey: 'fr',
       SettingsStorage.themeModeKey: 'light',
-      FavoritesStorage.key: ['p3', 'p5'],
+      FavoritesStorage.key: ['p2', 'p6', 'p8', 'p16'],
     });
     await tester.pumpWidget(
       buildApp(preferences: await SharedPreferences.getInstance()),
@@ -54,13 +54,13 @@ void main() {
     }
 
     await _capture(tester, '01_catalog');
-    await go(AppRoutes.catalogProduct('p5'), '02_product_detail');
+    await go(AppRoutes.catalogProduct('p6'), '02_product_detail');
 
     final products = await container.read(productsProvider.future);
     container.read(cartProvider.notifier)
-      ..addProduct(products[4])
-      ..addProduct(products[8], quantity: 2)
-      ..addProduct(products[1]);
+      ..addProduct(products[1])
+      ..addProduct(products[7], quantity: 2)
+      ..addProduct(products[14]);
     await go(AppRoutes.cart, '03_cart');
     await go(AppRoutes.checkout, '04_checkout');
     await go(AppRoutes.favorites, '05_favorites');

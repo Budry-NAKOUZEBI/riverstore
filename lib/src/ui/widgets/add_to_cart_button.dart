@@ -7,6 +7,7 @@ import '../../data/models/product.dart';
 import '../../providers/cart_providers.dart';
 import '../../router/app_routes.dart';
 import '../l10n_extensions.dart';
+import 'round_icon_button.dart';
 
 /// Ajoute un produit au panier et confirme l'action par une courte
 /// animation. Le contrôleur d'animation est géré par `flutter_hooks`
@@ -45,13 +46,14 @@ class AddToCartButton extends HookConsumerWidget {
       if (context.mounted) justAdded.value = false;
     }
 
+    final colors = Theme.of(context).colorScheme;
     return ScaleTransition(
       scale: scale,
-      child: IconButton.filled(
-        tooltip: product.inStock
-            ? l10n.addToCartTooltip(name)
-            : l10n.outOfStock,
+      child: RoundIconButton(
+        label: product.inStock ? l10n.addToCartTooltip(name) : l10n.outOfStock,
         onPressed: product.inStock ? onPressed : null,
+        background: colors.secondary,
+        foreground: colors.onSecondary,
         icon: Icon(justAdded.value ? Icons.check : Icons.add_shopping_cart),
       ),
     );

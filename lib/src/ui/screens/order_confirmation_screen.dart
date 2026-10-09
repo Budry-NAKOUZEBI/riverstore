@@ -5,8 +5,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../providers/order_providers.dart';
 import '../../router/app_routes.dart';
 import '../l10n_extensions.dart';
+import '../theme/app_theme.dart';
 import '../widgets/order_summary.dart';
 import '../widgets/state_views.dart';
+import '../widgets/wax_motif.dart';
 
 class OrderConfirmationScreen extends ConsumerWidget {
   const OrderConfirmationScreen({super.key, required this.orderId});
@@ -41,49 +43,77 @@ class OrderConfirmationScreen extends ConsumerWidget {
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 560),
                   child: ListView(
-                    padding: const EdgeInsets.all(24),
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
                     children: [
-                      Icon(
-                        Icons.check_circle_rounded,
-                        size: 96,
-                        color: theme.colorScheme.primary,
-                      ),
-                      const SizedBox(height: 16),
-                      Semantics(
-                        header: true,
-                        child: Text(
-                          l10n.orderConfirmedMessage(
-                            order.address.fullName.split(' ').first,
-                          ),
-                          textAlign: TextAlign.center,
-                          style: theme.textTheme.titleLarge,
+                      WaxBanner(
+                        padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 64,
+                              height: 64,
+                              decoration: const BoxDecoration(
+                                color: AppTheme.gold,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.check_rounded,
+                                size: 40,
+                                color: AppTheme.riverDeep,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            Semantics(
+                              header: true,
+                              child: Text(
+                                l10n.orderConfirmedMessage(
+                                  order.address.fullName.split(' ').first,
+                                ),
+                                style: theme.textTheme.headlineSmall?.copyWith(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              '${l10n.orderNumber(order.id)} · '
+                              '${l10n.orderItemsCount(order.itemCount)}',
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        '${l10n.orderNumber(order.id)} · '
-                        '${l10n.orderItemsCount(order.itemCount)}',
-                        textAlign: TextAlign.center,
-                        style: theme.textTheme.bodyMedium,
-                      ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 16),
                       Card(
                         child: Padding(
-                          padding: const EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(18),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                l10n.orderDeliveryTo,
-                                style: theme.textTheme.labelLarge,
+                              _InfoBlock(
+                                icon: Icons.location_on_outlined,
+                                title: l10n.orderDeliveryTo,
+                                body:
+                                    '${order.address.fullName} · +242 ${order.address.phone}\n'
+                                    '${order.address.street}\n'
+                                    '${order.address.district}, ${order.address.city}',
                               ),
-                              const SizedBox(height: 4),
-                              Text(
-                                '${order.address.fullName}\n'
-                                '${order.address.street}\n'
-                                '${order.address.postalCode} ${order.address.city}',
+                              const SizedBox(height: 14),
+                              _InfoBlock(
+                                icon: Icons.account_balance_wallet_outlined,
+                                title: l10n.orderPaidWith(
+                                  order.paymentMethod.label(l10n),
+                                ),
+                                body: order.paymentMethod.hint(l10n),
                               ),
-                              const Divider(height: 24),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 16),
+                                child: Divider(),
+                              ),
                               OrderSummary(
                                 pricing: order.pricing,
                                 showFreeShippingHint: false,
@@ -92,7 +122,7 @@ class OrderConfirmationScreen extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 20),
                       FilledButton(
                         onPressed: backToCatalog,
                         child: Text(l10n.continueShopping),
@@ -101,6 +131,42 @@ class OrderConfirmationScreen extends ConsumerWidget {
                   ),
                 ),
               ),
+      ),
+    );
+  }
+}
+
+class _InfoBlock extends StatelessWidget {
+  const _InfoBlock({
+    required this.icon,
+    required this.title,
+    required this.body,
+  });
+
+  final IconData icon;
+  final String title;
+  final String body;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return MergeSemantics(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: theme.colorScheme.secondary),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: theme.textTheme.titleSmall),
+                const SizedBox(height: 2),
+                Text(body, style: theme.textTheme.bodyMedium),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

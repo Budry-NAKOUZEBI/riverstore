@@ -9,7 +9,9 @@ import '../../providers/order_providers.dart';
 import '../../providers/user_providers.dart';
 import '../../router/app_routes.dart';
 import '../l10n_extensions.dart';
+import '../theme/app_theme.dart';
 import '../widgets/state_views.dart';
+import '../widgets/wax_motif.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -28,6 +30,7 @@ class ProfileScreen extends ConsumerWidget {
             icon: const Icon(Icons.settings_outlined),
             onPressed: () => context.go(AppRoutes.settings),
           ),
+          const SizedBox(width: 8),
         ],
       ),
       body: user.when(
@@ -54,60 +57,85 @@ class _ProfileBody extends ConsumerWidget {
     final orders = ref.watch(orderHistoryProvider);
     final favoritesCount = ref.watch(favoritesCountProvider);
     final cartCount = ref.watch(cartItemCountProvider);
-    const avatarRadius = 48.0;
-    final avatarPixels =
-        (avatarRadius * 2 * MediaQuery.devicePixelRatioOf(context)).round();
 
     return ListView(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
       children: [
-        Center(
-          child: Semantics(
-            image: true,
-            label: l10n.avatarSemantics(user.name),
-            child: CircleAvatar(
-              radius: avatarRadius,
-              // Avatar décodé à sa taille d'affichage.
-              foregroundImage: ResizeImage(
-                NetworkImage(user.avatarUrl),
-                width: avatarPixels,
+        WaxBanner(
+          child: Row(
+            children: [
+              Semantics(
+                label: l10n.avatarSemantics(user.name),
+                excludeSemantics: true,
+                child: Container(
+                  width: 72,
+                  height: 72,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: AppTheme.gold,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 3),
+                  ),
+                  child: Text(
+                    user.initials,
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      color: AppTheme.riverDeep,
+                    ),
+                  ),
+                ),
               ),
-              onForegroundImageError: (_, _) {},
-              child: Text(
-                user.name.split(' ').map((part) => part[0]).take(2).join(),
-                style: theme.textTheme.headlineSmall,
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      user.name,
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      l10n.profileContact('+242 ${user.phone}', user.city),
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      l10n.memberSince(user.memberSince),
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
         const SizedBox(height: 16),
-        Text(
-          user.name,
-          textAlign: TextAlign.center,
-          style: theme.textTheme.headlineSmall,
-        ),
-        Text(
-          user.email,
-          textAlign: TextAlign.center,
-          style: theme.textTheme.bodyMedium,
-        ),
-        const SizedBox(height: 4),
-        Text(
-          l10n.memberSince(user.memberSince),
-          textAlign: TextAlign.center,
-          style: theme.textTheme.bodySmall,
-        ),
-        const SizedBox(height: 24),
         Row(
           children: [
             _StatTile(
+              icon: Icons.receipt_long_outlined,
               label: l10n.statOrders,
               value: user.totalOrders + orders.length,
             ),
             const SizedBox(width: 12),
-            _StatTile(label: l10n.statFavorites, value: favoritesCount),
+            _StatTile(
+              icon: Icons.favorite_border,
+              label: l10n.statFavorites,
+              value: favoritesCount,
+            ),
             const SizedBox(width: 12),
-            _StatTile(label: l10n.statCart, value: cartCount),
+            _StatTile(
+              icon: Icons.shopping_bag_outlined,
+              label: l10n.statCart,
+              value: cartCount,
+            ),
           ],
         ),
         const SizedBox(height: 24),
@@ -120,21 +148,27 @@ class _ProfileBody extends ConsumerWidget {
           Text(l10n.noRecentOrders, style: theme.textTheme.bodyMedium)
         else
           for (final order in orders)
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.receipt_long_outlined),
-              title: Text(l10n.orderNumber(order.id)),
-              subtitle: Text(l10n.orderItemsCount(order.itemCount)),
-              trailing: Text(context.formatPrice(order.pricing.totalInCents)),
+            Card(
+              margin: const EdgeInsets.only(bottom: 8),
+              child: ListTile(
+                leading: const Icon(Icons.receipt_long_outlined),
+                title: Text(l10n.orderNumber(order.id)),
+                subtitle: Text(l10n.orderItemsCount(order.itemCount)),
+                trailing: Text(
+                  context.formatPrice(order.pricing.total),
+                  style: theme.textTheme.titleSmall,
+                ),
+              ),
             ),
-        const Divider(height: 32),
-        ListTile(
-          contentPadding: EdgeInsets.zero,
-          leading: const Icon(Icons.settings_outlined),
-          title: Text(l10n.settingsTitle),
-          subtitle: Text(l10n.settingsSubtitle),
-          trailing: const Icon(Icons.chevron_right),
-          onTap: () => context.go(AppRoutes.settings),
+        const SizedBox(height: 16),
+        Card(
+          child: ListTile(
+            leading: const Icon(Icons.settings_outlined),
+            title: Text(l10n.settingsTitle),
+            subtitle: Text(l10n.settingsSubtitle),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.go(AppRoutes.settings),
+          ),
         ),
       ],
     );
@@ -142,8 +176,13 @@ class _ProfileBody extends ConsumerWidget {
 }
 
 class _StatTile extends StatelessWidget {
-  const _StatTile({required this.label, required this.value});
+  const _StatTile({
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
 
+  final IconData icon;
   final String label;
   final int value;
 
@@ -157,12 +196,9 @@ class _StatTile extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
             child: Column(
               children: [
-                Text(
-                  '$value',
-                  style: theme.textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                Icon(icon, size: 20, color: theme.colorScheme.secondary),
+                const SizedBox(height: 6),
+                Text('$value', style: theme.textTheme.headlineSmall),
                 Text(
                   label,
                   maxLines: 1,

@@ -7,20 +7,24 @@ import 'package:riverstore/src/ui/widgets/product_image.dart';
 void main() {
   group('normalizeForSearch', () {
     test('lowercases, trims and strips French diacritics', () {
-      expect(normalizeForSearch('  Écran Incurvé '), 'ecran incurve');
+      expect(normalizeForSearch("  Kit d'Éclairage "), "kit d'eclairage");
       expect(normalizeForSearch('Œuvre à Noël'), 'oeuvre a noel');
     });
   });
 
-  group('formatPrice', () {
-    test('uses French conventions (comma, non-breaking spaces, € suffix)', () {
-      expect(formatPrice(123456, 'fr'), '1 234,56 €');
-      expect(formatPrice(5990, 'fr'), '59,90 €');
+  group('formatPrice (francs CFA)', () {
+    test('French: space-grouped thousands, no decimals, FCFA suffix', () {
+      expect(formatPrice(1234500, 'fr'), '1 234 500 FCFA');
+      expect(formatPrice(18000, 'fr'), '18 000 FCFA');
     });
 
-    test('uses English conventions (€ prefix, dot decimal)', () {
-      expect(formatPrice(123456, 'en'), '€1,234.56');
-      expect(formatPrice(0, 'en'), '€0.00');
+    test('English: comma-grouped thousands', () {
+      expect(formatPrice(1234500, 'en'), '1,234,500 FCFA');
+      expect(formatPrice(0, 'en'), '0 FCFA');
+    });
+
+    test('never uses the narrow no-break space missing from app fonts', () {
+      expect(formatPrice(250000, 'fr').contains(' '), isFalse);
     });
   });
 
@@ -36,21 +40,22 @@ void main() {
       expect(Validators.fullName('Al'), isNull);
     });
 
-    test('email accepts valid addresses and rejects malformed ones', () {
-      expect(Validators.email('camille@example.com'), isNull);
-      expect(Validators.email(' camille@example.fr '), isNull);
-      expect(Validators.email('camille@example'), ValidationError.invalidEmail);
-      expect(
-        Validators.email('camille example.com'),
-        ValidationError.invalidEmail,
-      );
-      expect(Validators.email(''), ValidationError.required);
+    test('phone accepts Congolese mobile numbers (MTN 06, Airtel 04/05)', () {
+      expect(Validators.phone('06 612 34 56'), isNull);
+      expect(Validators.phone('055123456'), isNull);
+      expect(Validators.phone('04-412-34-56'), isNull);
+      expect(Validators.phone('+242 06 612 34 56'), isNull);
+      expect(Validators.phone('00242 05 512 34 56'), isNull);
     });
 
-    test('postalCode requires exactly five digits', () {
-      expect(Validators.postalCode('75011'), isNull);
-      expect(Validators.postalCode('7501'), ValidationError.invalidPostalCode);
-      expect(Validators.postalCode('75O11'), ValidationError.invalidPostalCode);
+    test('phone rejects other formats', () {
+      expect(Validators.phone('07 612 34 56'), ValidationError.invalidPhone);
+      expect(Validators.phone('06 612 34'), ValidationError.invalidPhone);
+      expect(
+        Validators.phone('+243 81 234 5678'),
+        ValidationError.invalidPhone,
+      );
+      expect(Validators.phone(''), ValidationError.required);
     });
   });
 

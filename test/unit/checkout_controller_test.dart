@@ -16,6 +16,7 @@ void main() {
   setUpAll(() {
     registerFallbackValue(<CartItem>[]);
     registerFallbackValue(testAddress);
+    registerFallbackValue(PaymentMethod.mtnMobileMoney);
   });
 
   setUp(() {
@@ -25,27 +26,29 @@ void main() {
     );
     // Garde le provider autoDispose en vie pendant le test.
     container.listen(checkoutControllerProvider, (_, _) {});
-    container.read(cartProvider.notifier).addProduct(headphones);
+    container.read(cartProvider.notifier).addProduct(pagne);
   });
 
   test('a successful order is recorded and empties the cart', () async {
     final order = Order(
       id: 'RS-1',
-      items: [CartItem(product: headphones, quantity: 1)],
-      pricing: const OrderPricing(subtotalInCents: 7990),
+      items: [CartItem(product: pagne, quantity: 1)],
+      pricing: const OrderPricing(subtotal: 18000),
       address: testAddress,
+      paymentMethod: PaymentMethod.mtnMobileMoney,
       placedAt: DateTime(2026),
     );
     when(
       () => repository.placeOrder(
         items: any(named: 'items'),
         address: any(named: 'address'),
+        paymentMethod: any(named: 'paymentMethod'),
       ),
     ).thenAnswer((_) async => order);
 
     final result = await container
         .read(checkoutControllerProvider.notifier)
-        .submit(testAddress);
+        .submit(testAddress, paymentMethod: PaymentMethod.mtnMobileMoney);
 
     expect(result, order);
     expect(container.read(checkoutControllerProvider).value, order);
@@ -54,8 +57,9 @@ void main() {
     expect(container.read(cartProvider).isEmpty, isTrue);
     verify(
       () => repository.placeOrder(
-        items: [CartItem(product: headphones, quantity: 1)],
+        items: [CartItem(product: pagne, quantity: 1)],
         address: testAddress,
+        paymentMethod: PaymentMethod.mtnMobileMoney,
       ),
     ).called(1);
   });
@@ -65,16 +69,17 @@ void main() {
       () => repository.placeOrder(
         items: any(named: 'items'),
         address: any(named: 'address'),
+        paymentMethod: any(named: 'paymentMethod'),
       ),
     ).thenThrow(Exception('network down'));
 
     final result = await container
         .read(checkoutControllerProvider.notifier)
-        .submit(testAddress);
+        .submit(testAddress, paymentMethod: PaymentMethod.mtnMobileMoney);
 
     expect(result, isNull);
     expect(container.read(checkoutControllerProvider).hasError, isTrue);
     expect(container.read(orderHistoryProvider), isEmpty);
-    expect(container.read(cartProvider).quantityOf(headphones.id), 1);
+    expect(container.read(cartProvider).quantityOf(pagne.id), 1);
   });
 }

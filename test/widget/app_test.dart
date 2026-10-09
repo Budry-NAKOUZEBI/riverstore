@@ -17,7 +17,7 @@ void main() {
   ) async {
     await tester.pumpFullApp();
     expect(find.text('Catalog'), findsOneWidget);
-    expect(find.text('Headphones'), findsOneWidget);
+    expect(find.text('Wax print fabric'), findsOneWidget);
   });
 
   testWidgets('switching language in settings updates the whole app', (
@@ -43,7 +43,7 @@ void main() {
     final container = await tester.pumpFullApp(preferences: french);
     final semantics = tester.ensureSemantics();
 
-    container.read(cartProvider.notifier).addProduct(lamp, quantity: 2);
+    container.read(cartProvider.notifier).addProduct(pot, quantity: 2);
     await tester.pumpAndSettle();
 
     expect(find.text('2'), findsOneWidget);
@@ -57,31 +57,33 @@ void main() {
   testWidgets('checkout places an order and shows the confirmation', (
     tester,
   ) async {
+    tester.view.physicalSize = const Size(1200, 2400);
+    tester.view.devicePixelRatio = 1.5;
+    addTearDown(tester.view.reset);
     final container = await tester.pumpFullApp(preferences: french);
-    container.read(cartProvider.notifier).addProduct(headphones);
+    container.read(cartProvider.notifier).addProduct(pagne);
     container.read(routerProvider).go(AppRoutes.checkout);
     await tester.pumpAndSettle();
 
     await tester.enterText(
-      find.widgetWithText(TextFormField, 'Adresse'),
+      find.widgetWithText(TextFormField, 'Quartier / arrondissement'),
+      testAddress.district,
+    );
+    await tester.enterText(
+      find.widgetWithText(TextFormField, 'Adresse et point de repère'),
       testAddress.street,
     );
-    await tester.enterText(
-      find.widgetWithText(TextFormField, 'Code postal'),
-      testAddress.postalCode,
-    );
-    await tester.enterText(
-      find.widgetWithText(TextFormField, 'Ville'),
-      testAddress.city,
-    );
-    await tester.tap(find.text('Payer 79,90 €'));
+    await tester.tap(find.text('Airtel Money'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Payer 20\u00a0000\u00a0FCFA'));
     await tester.pumpAndSettle();
 
     expect(find.text('Commande confirmée'), findsOneWidget);
     expect(
-      find.text('Merci Camille ! Votre commande est en préparation.'),
+      find.text('Merci Grâce ! Votre commande est en préparation.'),
       findsOneWidget,
     );
+    expect(find.text('Paiement : Airtel Money'), findsOneWidget);
     expect(container.read(cartProvider).isEmpty, isTrue);
 
     await tester.ensureVisible(find.text('Continuer mes achats'));

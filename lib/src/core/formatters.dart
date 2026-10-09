@@ -1,12 +1,21 @@
 import 'package:intl/intl.dart';
 
-/// Formate un montant exprimé en centimes selon les conventions de la
-/// langue active : `59,90 €` en français, `€59.90` en anglais.
-String formatPrice(int cents, String locale) {
-  final format = NumberFormat.currency(
-    locale: locale,
-    symbol: '€',
-    decimalDigits: 2,
+/// Un `NumberFormat` par locale : sa construction (analyse du motif,
+/// symboles de la locale) est coûteuse et `formatPrice` est appelé pour
+/// chaque carte produit.
+final _formats = <String, NumberFormat>{};
+
+/// Formate un montant en francs CFA (XAF). Le franc CFA n'utilise pas de
+/// subdivision : les montants sont des entiers.
+///
+/// `25 000 FCFA` en français, `25,000 FCFA` en anglais. L'espace fine
+/// insécable (U+202F) d'`intl` est remplacée par une espace insécable
+/// classique, présente dans les polices de l'application.
+String formatPrice(int amount, String locale) {
+  final format = _formats.putIfAbsent(
+    locale,
+    () => NumberFormat.decimalPattern(locale),
   );
-  return format.format(cents / 100);
+  final digits = format.format(amount).replaceAll(' ', ' ');
+  return '$digits FCFA';
 }

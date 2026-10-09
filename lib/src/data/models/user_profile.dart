@@ -6,7 +6,8 @@ class UserProfile {
     required this.id,
     required this.name,
     required this.email,
-    required this.avatarUrl,
+    required this.phone,
+    required this.city,
     required this.memberSince,
     required this.totalOrders,
   });
@@ -14,7 +15,17 @@ class UserProfile {
   final String id;
   final String name;
   final String email;
-  final String avatarUrl;
+  final String phone;
+  final String city;
   final DateTime memberSince;
   final int totalOrders;
+
+  String get firstName => name.split(' ').first;
+
+  String get initials => name
+      .split(' ')
+      .where((part) => part.isNotEmpty)
+      .take(2)
+      .map((part) => part[0].toUpperCase())
+      .join();
 }

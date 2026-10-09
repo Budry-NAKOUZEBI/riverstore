@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../../data/models/product.dart';
 import 'product_card.dart';
 
-/// Grille responsive et paresseuse : seules les cartes visibles (plus une
-/// petite marge) sont construites, et donc seules leurs images sont
-/// téléchargées et décodées.
+/// Grille responsive et paresseuse (sliver) : seules les cartes visibles,
+/// plus une petite marge, sont construites, et donc seules leurs images
+/// sont téléchargées et décodées.
 class ProductGrid extends StatelessWidget {
   const ProductGrid({
     super.key,
@@ -18,23 +18,25 @@ class ProductGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: const EdgeInsets.all(12),
-      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 240,
-        mainAxisSpacing: 12,
-        crossAxisSpacing: 12,
-        childAspectRatio: 0.64,
+    return SliverPadding(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+      sliver: SliverGrid.builder(
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 240,
+          mainAxisSpacing: 14,
+          crossAxisSpacing: 14,
+          childAspectRatio: 0.58,
+        ),
+        itemCount: products.length,
+        itemBuilder: (context, index) {
+          final product = products[index];
+          return ProductCard(
+            key: ValueKey(product.id),
+            product: product,
+            onTap: () => onProductTap(product),
+          );
+        },
       ),
-      itemCount: products.length,
-      itemBuilder: (context, index) {
-        final product = products[index];
-        return ProductCard(
-          key: ValueKey(product.id),
-          product: product,
-          onTap: () => onProductTap(product),
-        );
-      },
     );
   }
 }
