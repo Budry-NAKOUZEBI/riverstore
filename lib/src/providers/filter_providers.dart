@@ -1,20 +1,21 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../core/text_utils.dart';
 import '../data/models/product.dart';
+import '../data/models/product_category.dart';
 import '../data/models/product_filter.dart';
 import 'product_providers.dart';
 
-class FilterNotifier extends StateNotifier<ProductFilter> {
-  FilterNotifier() : super(const ProductFilter());
+class FilterNotifier extends Notifier<ProductFilter> {
+  @override
+  ProductFilter build() => const ProductFilter();
 
   void setSearchQuery(String query) =>
       state = state.copyWith(searchQuery: query);
 
-  void setCategory(String? category) {
-    state = category == null
-        ? state.copyWith(clearCategory: true)
-        : state.copyWith(category: category);
-  }
+  void setCategory(ProductCategory? category) => state = category == null
+      ? state.copyWith(clearCategory: true)
+      : state.copyWith(category: category);
 
   void setSortOption(SortOption option) =>
       state = state.copyWith(sortOption: option);
@@ -22,46 +23,59 @@ class FilterNotifier extends StateNotifier<ProductFilter> {
   void reset() => state = const ProductFilter();
 }
 
-final filterProvider =
-    StateNotifierProvider<FilterNotifier, ProductFilter>((ref) {
-  return FilterNotifier();
-});
+final filterProvider = NotifierProvider<FilterNotifier, ProductFilter>(
+  FilterNotifier.new,
+);
 
-/// Fonction pure de filtrage/tri, testable indépendamment des providers.
-List<Product> applyFilterAndSort(List<Product> products, ProductFilter filter) {
-  final query = filter.searchQuery.trim().toLowerCase();
+/// Filtrage et tri purs, testables sans provider. La recherche porte sur
+/// toutes les traductions du nom et ignore la casse et les accents ; le tri
+/// alphabétique utilise la langue affichée.
+List<Product> applyFilterAndSort(
+  List<Product> products,
+  ProductFilter filter, {
+  required String languageCode,
+}) {
+  final query = normalizeForSearch(filter.searchQuery);
   final result = products.where((product) {
-    final matchesCategory =
-        filter.category == null || product.category == filter.category;
-    final matchesQuery =
-        query.isEmpty || product.name.toLowerCase().contains(query);
-    return matchesCategory && matchesQuery;
+    if (filter.category != null && product.category != filter.category) {
+      return false;
+    }
+    if (query.isEmpty) return true;
+    return product.name.all.any(
+      (name) => normalizeForSearch(name).contains(query),
+    );
   }).toList();
 
   switch (filter.sortOption) {
     case SortOption.relevance:
       break;
     case SortOption.priceLowToHigh:
-      result.sort((a, b) => a.price.compareTo(b.price));
-      break;
+      result.sort((a, b) => a.priceInCents.compareTo(b.priceInCents));
     case SortOption.priceHighToLow:
-      result.sort((a, b) => b.price.compareTo(a.price));
-      break;
+      result.sort((a, b) => b.priceInCents.compareTo(a.priceInCents));
     case SortOption.ratingHighToLow:
       result.sort((a, b) => b.rating.compareTo(a.rating));
-      break;
     case SortOption.nameAToZ:
-      result.sort((a, b) => a.name.compareTo(b.name));
-      break;
+      result.sort(
+        (a, b) => normalizeForSearch(
+          a.name.resolve(languageCode),
+        ).compareTo(normalizeForSearch(b.name.resolve(languageCode))),
+      );
   }
   return result;
 }
 
-/// Combine le catalogue asynchrone et les critères de filtre/tri courants.
-final filteredProductsProvider = Provider<AsyncValue<List<Product>>>((ref) {
-  final filter = ref.watch(filterProvider);
-  final productsAsync = ref.watch(productListProvider);
-  return productsAsync.whenData(
-    (products) => applyFilterAndSort(products, filter),
-  );
-});
+/// Catalogue filtré pour une langue donnée (paramètre de la famille).
+final filteredProductsProvider =
+    Provider.family<AsyncValue<List<Product>>, String>((ref, languageCode) {
+      final filter = ref.watch(filterProvider);
+      return ref
+          .watch(productsProvider)
+          .whenData(
+            (products) => applyFilterAndSort(
+              products,
+              filter,
+              languageCode: languageCode,
+            ),
+          );
+    });

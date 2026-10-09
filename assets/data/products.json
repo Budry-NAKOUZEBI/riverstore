@@ -1,141 +1,239 @@
 [
   {
     "id": "p1",
-    "name": "Veste en jean oversize",
-    "description": "Veste en denim brut à coupe ample, doublure douce et boutons pression.",
-    "price": 59.90,
-    "category": "Vêtements",
-    "imageUrl": "https://picsum.photos/seed/p1/600/600",
+    "name": {
+      "fr": "Veste en jean oversize",
+      "en": "Oversized denim jacket"
+    },
+    "description": {
+      "fr": "Veste en denim brut à coupe ample, doublure douce et boutons pression.",
+      "en": "Raw denim jacket with a relaxed fit, soft lining and snap buttons."
+    },
+    "price": 59.9,
+    "category": "clothing",
+    "imageUrl": "https://picsum.photos/seed/p1/800/800",
+    "thumbnailUrl": "https://picsum.photos/seed/p1/400/400",
     "rating": 4.3,
     "stock": 12
   },
   {
     "id": "p2",
-    "name": "T-shirt col rond coton bio",
-    "description": "T-shirt basique en coton biologique certifié, coupe droite intemporelle.",
-    "price": 19.90,
-    "category": "Vêtements",
-    "imageUrl": "https://picsum.photos/seed/p2/600/600",
+    "name": {
+      "fr": "T-shirt col rond coton bio",
+      "en": "Organic cotton crew-neck T-shirt"
+    },
+    "description": {
+      "fr": "T-shirt basique en coton biologique certifié, coupe droite intemporelle.",
+      "en": "Basic T-shirt in certified organic cotton, timeless straight cut."
+    },
+    "price": 19.9,
+    "category": "clothing",
+    "imageUrl": "https://picsum.photos/seed/p2/800/800",
+    "thumbnailUrl": "https://picsum.photos/seed/p2/400/400",
     "rating": 4.6,
     "stock": 40
   },
   {
     "id": "p3",
-    "name": "Sneakers running Aero",
-    "description": "Chaussures de course légères avec semelle amortissante et mesh respirant.",
-    "price": 89.00,
-    "category": "Chaussures",
-    "imageUrl": "https://picsum.photos/seed/p3/600/600",
+    "name": {
+      "fr": "Sneakers running Aero",
+      "en": "Aero running sneakers"
+    },
+    "description": {
+      "fr": "Chaussures de course légères avec semelle amortissante et mesh respirant.",
+      "en": "Lightweight running shoes with a cushioned sole and breathable mesh."
+    },
+    "price": 89.0,
+    "category": "shoes",
+    "imageUrl": "https://picsum.photos/seed/p3/800/800",
+    "thumbnailUrl": "https://picsum.photos/seed/p3/400/400",
     "rating": 4.5,
     "stock": 8
   },
   {
     "id": "p4",
-    "name": "Bottines cuir suédé",
-    "description": "Bottines en cuir suédé véritable, semelle antidérapante et doublure chaude.",
-    "price": 129.00,
-    "category": "Chaussures",
-    "imageUrl": "https://picsum.photos/seed/p4/600/600",
+    "name": {
+      "fr": "Bottines cuir suédé",
+      "en": "Suede leather ankle boots"
+    },
+    "description": {
+      "fr": "Bottines en cuir suédé véritable, semelle antidérapante et doublure chaude.",
+      "en": "Genuine suede ankle boots with a non-slip sole and warm lining."
+    },
+    "price": 129.0,
+    "category": "shoes",
+    "imageUrl": "https://picsum.photos/seed/p4/800/800",
+    "thumbnailUrl": "https://picsum.photos/seed/p4/400/400",
     "rating": 4.1,
     "stock": 5
   },
   {
     "id": "p5",
-    "name": "Casque audio sans fil",
-    "description": "Casque Bluetooth à réduction de bruit active, 30h d'autonomie.",
-    "price": 79.90,
-    "category": "Électronique",
-    "imageUrl": "https://picsum.photos/seed/p5/600/600",
+    "name": {
+      "fr": "Casque audio sans fil",
+      "en": "Wireless headphones"
+    },
+    "description": {
+      "fr": "Casque Bluetooth à réduction de bruit active, 30h d'autonomie.",
+      "en": "Bluetooth headphones with active noise cancellation and 30h battery life."
+    },
+    "price": 79.9,
+    "category": "electronics",
+    "imageUrl": "https://picsum.photos/seed/p5/800/800",
+    "thumbnailUrl": "https://picsum.photos/seed/p5/400/400",
     "rating": 4.7,
     "stock": 15
   },
   {
     "id": "p6",
-    "name": "Montre connectée Sport",
-    "description": "Suivi d'activité, notifications et mesure de la fréquence cardiaque.",
-    "price": 149.00,
-    "category": "Électronique",
-    "imageUrl": "https://picsum.photos/seed/p6/600/600",
+    "name": {
+      "fr": "Montre connectée Sport",
+      "en": "Sport smartwatch"
+    },
+    "description": {
+      "fr": "Suivi d'activité, notifications et mesure de la fréquence cardiaque.",
+      "en": "Activity tracking, notifications and heart-rate monitoring."
+    },
+    "price": 149.0,
+    "category": "electronics",
+    "imageUrl": "https://picsum.photos/seed/p6/800/800",
+    "thumbnailUrl": "https://picsum.photos/seed/p6/400/400",
     "rating": 4.2,
     "stock": 10
   },
   {
     "id": "p7",
-    "name": "Sac à dos urbain 20L",
-    "description": "Sac à dos compact avec compartiment ordinateur portable et poches étanches.",
-    "price": 45.50,
-    "category": "Accessoires",
-    "imageUrl": "https://picsum.photos/seed/p7/600/600",
+    "name": {
+      "fr": "Sac à dos urbain 20L",
+      "en": "Urban backpack 20L"
+    },
+    "description": {
+      "fr": "Sac à dos compact avec compartiment ordinateur portable et poches étanches.",
+      "en": "Compact backpack with a laptop compartment and waterproof pockets."
+    },
+    "price": 45.5,
+    "category": "accessories",
+    "imageUrl": "https://picsum.photos/seed/p7/800/800",
+    "thumbnailUrl": "https://picsum.photos/seed/p7/400/400",
     "rating": 4.4,
     "stock": 20
   },
   {
     "id": "p8",
-    "name": "Ceinture cuir réversible",
-    "description": "Ceinture réversible noir/marron en cuir véritable avec boucle amovible.",
-    "price": 29.90,
-    "category": "Accessoires",
-    "imageUrl": "https://picsum.photos/seed/p8/600/600",
+    "name": {
+      "fr": "Ceinture cuir réversible",
+      "en": "Reversible leather belt"
+    },
+    "description": {
+      "fr": "Ceinture réversible noir/marron en cuir véritable avec boucle amovible.",
+      "en": "Reversible black/brown genuine leather belt with a removable buckle."
+    },
+    "price": 29.9,
+    "category": "accessories",
+    "imageUrl": "https://picsum.photos/seed/p8/800/800",
+    "thumbnailUrl": "https://picsum.photos/seed/p8/400/400",
     "rating": 3.9,
-    "stock": 25
+    "stock": 0
   },
   {
     "id": "p9",
-    "name": "Lampe de bureau LED",
-    "description": "Lampe LED à intensité réglable avec port de charge USB intégré.",
-    "price": 34.90,
-    "category": "Maison",
-    "imageUrl": "https://picsum.photos/seed/p9/600/600",
+    "name": {
+      "fr": "Lampe de bureau LED",
+      "en": "LED desk lamp"
+    },
+    "description": {
+      "fr": "Lampe LED à intensité réglable avec port de charge USB intégré.",
+      "en": "Dimmable LED lamp with a built-in USB charging port."
+    },
+    "price": 34.9,
+    "category": "home",
+    "imageUrl": "https://picsum.photos/seed/p9/800/800",
+    "thumbnailUrl": "https://picsum.photos/seed/p9/400/400",
     "rating": 4.0,
     "stock": 18
   },
   {
     "id": "p10",
-    "name": "Coussin décoratif velours",
-    "description": "Coussin en velours doux, housse déhoussable et lavable en machine.",
-    "price": 22.00,
-    "category": "Maison",
-    "imageUrl": "https://picsum.photos/seed/p10/600/600",
+    "name": {
+      "fr": "Coussin décoratif velours",
+      "en": "Velvet throw pillow"
+    },
+    "description": {
+      "fr": "Coussin en velours doux, housse déhoussable et lavable en machine.",
+      "en": "Soft velvet pillow with a removable, machine-washable cover."
+    },
+    "price": 22.0,
+    "category": "home",
+    "imageUrl": "https://picsum.photos/seed/p10/800/800",
+    "thumbnailUrl": "https://picsum.photos/seed/p10/400/400",
     "rating": 4.3,
     "stock": 30
   },
   {
     "id": "p11",
-    "name": "Robe d'été fleurie",
-    "description": "Robe légère en viscose à motifs floraux, idéale pour la saison chaude.",
-    "price": 49.90,
-    "category": "Vêtements",
-    "imageUrl": "https://picsum.photos/seed/p11/600/600",
+    "name": {
+      "fr": "Robe d'été fleurie",
+      "en": "Floral summer dress"
+    },
+    "description": {
+      "fr": "Robe légère en viscose à motifs floraux, idéale pour la saison chaude.",
+      "en": "Light viscose dress with a floral print, perfect for warm days."
+    },
+    "price": 49.9,
+    "category": "clothing",
+    "imageUrl": "https://picsum.photos/seed/p11/800/800",
+    "thumbnailUrl": "https://picsum.photos/seed/p11/400/400",
     "rating": 4.5,
     "stock": 14
   },
   {
     "id": "p12",
-    "name": "Baskets basses cuir blanc",
-    "description": "Baskets minimalistes en cuir blanc, semelle en caoutchouc durable.",
-    "price": 99.00,
-    "category": "Chaussures",
-    "imageUrl": "https://picsum.photos/seed/p12/600/600",
+    "name": {
+      "fr": "Baskets basses cuir blanc",
+      "en": "White leather low-top sneakers"
+    },
+    "description": {
+      "fr": "Baskets minimalistes en cuir blanc, semelle en caoutchouc durable.",
+      "en": "Minimalist white leather sneakers with a durable rubber sole."
+    },
+    "price": 99.0,
+    "category": "shoes",
+    "imageUrl": "https://picsum.photos/seed/p12/800/800",
+    "thumbnailUrl": "https://picsum.photos/seed/p12/400/400",
     "rating": 4.6,
     "stock": 9
   },
   {
     "id": "p13",
-    "name": "Enceinte Bluetooth portable",
-    "description": "Enceinte compacte étanche IPX6 avec 12h d'autonomie et son 360°.",
-    "price": 59.00,
-    "category": "Électronique",
-    "imageUrl": "https://picsum.photos/seed/p13/600/600",
+    "name": {
+      "fr": "Enceinte Bluetooth portable",
+      "en": "Portable Bluetooth speaker"
+    },
+    "description": {
+      "fr": "Enceinte compacte étanche IPX6 avec 12h d'autonomie et son 360°.",
+      "en": "Compact IPX6 waterproof speaker with 12h battery and 360° sound."
+    },
+    "price": 59.0,
+    "category": "electronics",
+    "imageUrl": "https://picsum.photos/seed/p13/800/800",
+    "thumbnailUrl": "https://picsum.photos/seed/p13/400/400",
     "rating": 4.1,
     "stock": 22
   },
   {
     "id": "p14",
-    "name": "Plaid tricot laine",
-    "description": "Plaid douillet en laine mélangée, parfait pour les soirées au coin du feu.",
-    "price": 39.90,
-    "category": "Maison",
-    "imageUrl": "https://picsum.photos/seed/p14/600/600",
+    "name": {
+      "fr": "Plaid tricot laine",
+      "en": "Knitted wool throw"
+    },
+    "description": {
+      "fr": "Plaid douillet en laine mélangée, parfait pour les soirées au coin du feu.",
+      "en": "Cosy wool-blend throw, perfect for evenings by the fire."
+    },
+    "price": 39.9,
+    "category": "home",
+    "imageUrl": "https://picsum.photos/seed/p14/800/800",
+    "thumbnailUrl": "https://picsum.photos/seed/p14/400/400",
     "rating": 4.4,
     "stock": 11
   }

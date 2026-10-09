@@ -1,0 +1,279 @@
+{
+  "@@locale": "fr",
+  "appTitle": "RiverStore",
+  "navCatalog": "Catalogue",
+  "navFavorites": "Favoris",
+  "navCart": "Panier",
+  "navProfile": "Profil",
+  "cartBadgeSemantics": "{count, plural, =0{Panier vide} =1{1 article dans le panier} other{{count} articles dans le panier}}",
+  "@cartBadgeSemantics": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "searchHint": "Rechercher un produit…",
+  "searchLabel": "Rechercher",
+  "searchClear": "Effacer la recherche",
+  "categoryFilterLabel": "Filtrer par catégorie",
+  "categoryAll": "Tous",
+  "categoryClothing": "Vêtements",
+  "categoryShoes": "Chaussures",
+  "categoryElectronics": "Électronique",
+  "categoryAccessories": "Accessoires",
+  "categoryHome": "Maison",
+  "sortLabel": "Trier",
+  "sortRelevance": "Pertinence",
+  "sortPriceLowToHigh": "Prix croissant",
+  "sortPriceHighToLow": "Prix décroissant",
+  "sortRating": "Meilleures notes",
+  "sortName": "Nom (A-Z)",
+  "catalogLoading": "Chargement du catalogue…",
+  "catalogError": "Impossible de charger les produits.",
+  "catalogEmpty": "Aucun produit ne correspond à votre recherche.",
+  "resetFilters": "Réinitialiser les filtres",
+  "retry": "Réessayer",
+  "loading": "Chargement…",
+  "pageNotFound": "Page introuvable.",
+  "backToCatalog": "Retour au catalogue",
+  "productCardSemantics": "{name}, {price}, noté {rating} sur 5",
+  "@productCardSemantics": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "rating": {
+        "type": "String"
+      }
+    }
+  },
+  "productCardHint": "voir le détail",
+  "productImageSemantics": "Photo du produit {name}",
+  "@productImageSemantics": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "ratingSemantics": "Note : {rating} sur 5",
+  "@ratingSemantics": {
+    "placeholders": {
+      "rating": {
+        "type": "String"
+      }
+    }
+  },
+  "outOfStock": "Rupture de stock",
+  "inStockCount": "{count, plural, =1{1 en stock} other{{count} en stock}}",
+  "@inStockCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "addToFavorites": "Ajouter aux favoris",
+  "removeFromFavorites": "Retirer des favoris",
+  "addToCart": "Ajouter au panier",
+  "addToCartTooltip": "Ajouter {name} au panier",
+  "@addToCartTooltip": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "addedToCart": "{name} ajouté au panier",
+  "@addedToCart": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "inCartCount": "{count, plural, =1{1 déjà dans le panier} other{{count} déjà dans le panier}}",
+  "@inCartCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stockLimitReached": "Stock maximum atteint pour ce produit",
+  "viewCart": "Voir le panier",
+  "productDetailTitle": "Détail produit",
+  "productNotFound": "Ce produit n'existe pas ou plus.",
+  "favoritesTitle": "Mes favoris",
+  "favoritesEmpty": "Vous n'avez pas encore de favoris.\nTouchez le cœur d'un produit pour l'ajouter ici.",
+  "cartTitle": "Mon panier",
+  "cartEmpty": "Votre panier est vide.",
+  "startShopping": "Découvrir le catalogue",
+  "clearCart": "Vider le panier",
+  "clearCartConfirmTitle": "Vider le panier ?",
+  "clearCartConfirmBody": "Tous les articles seront retirés du panier.",
+  "cancel": "Annuler",
+  "confirm": "Confirmer",
+  "undo": "Annuler",
+  "removeItem": "Retirer {name} du panier",
+  "@removeItem": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "itemRemoved": "{name} retiré du panier",
+  "@itemRemoved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "decreaseQuantity": "Diminuer la quantité de {name}",
+  "@decreaseQuantity": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "increaseQuantity": "Augmenter la quantité de {name}",
+  "@increaseQuantity": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "quantitySemantics": "Quantité : {quantity}",
+  "@quantitySemantics": {
+    "placeholders": {
+      "quantity": {
+        "type": "int"
+      }
+    }
+  },
+  "cartItemSubtitle": "{price} l'unité · {subtotal}",
+  "@cartItemSubtitle": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "subtotal": {
+        "type": "String"
+      }
+    }
+  },
+  "subtotal": "Sous-total",
+  "shipping": "Livraison",
+  "shippingFree": "Offerte",
+  "total": "Total",
+  "freeShippingHint": "Plus que {amount} pour la livraison offerte",
+  "@freeShippingHint": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "checkout": "Commander",
+  "checkoutTitle": "Livraison",
+  "fieldFullName": "Nom complet",
+  "fieldEmail": "E-mail",
+  "fieldStreet": "Adresse",
+  "fieldPostalCode": "Code postal",
+  "fieldCity": "Ville",
+  "errorRequired": "Ce champ est obligatoire",
+  "errorTooShort": "Valeur trop courte",
+  "errorInvalidEmail": "Adresse e-mail invalide",
+  "errorInvalidPostalCode": "Code postal invalide (5 chiffres)",
+  "orderSummary": "Récapitulatif",
+  "placeOrder": "Payer {total}",
+  "@placeOrder": {
+    "placeholders": {
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "placingOrder": "Envoi de la commande…",
+  "paymentNotice": "Paiement simulé : aucune somme ne sera débitée.",
+  "orderFailed": "La commande n'a pas pu être envoyée. Réessayez.",
+  "orderConfirmedTitle": "Commande confirmée",
+  "orderConfirmedMessage": "Merci {name} ! Votre commande est en préparation.",
+  "@orderConfirmedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "orderNumber": "Commande n° {id}",
+  "@orderNumber": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "orderItemsCount": "{count, plural, =1{1 article} other{{count} articles}}",
+  "@orderItemsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "orderDeliveryTo": "Livraison à",
+  "continueShopping": "Continuer mes achats",
+  "orderMissing": "Commande introuvable.",
+  "profileTitle": "Profil",
+  "avatarSemantics": "Photo de profil de {name}",
+  "@avatarSemantics": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "memberSince": "Membre depuis le {date}",
+  "@memberSince": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMd"
+      }
+    }
+  },
+  "statOrders": "Commandes",
+  "statFavorites": "Favoris",
+  "statCart": "Panier",
+  "recentOrders": "Commandes de la session",
+  "noRecentOrders": "Aucune commande passée pendant cette session.",
+  "settingsTitle": "Paramètres",
+  "settingsSubtitle": "Langue, thème, à propos",
+  "settingsLanguage": "Langue",
+  "languageSystem": "Langue de l'appareil",
+  "languageFrench": "Français",
+  "languageEnglish": "English",
+  "settingsTheme": "Thème",
+  "themeSystem": "Auto",
+  "themeLight": "Clair",
+  "themeDark": "Sombre",
+  "settingsAbout": "À propos",
+  "appVersion": "Version {version}",
+  "@appVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "licenses": "Licences open source"
+}

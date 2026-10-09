@@ -1,60 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../providers/favorites_providers.dart';
 import '../../providers/product_providers.dart';
-import '../widgets/empty_state.dart';
-import '../widgets/error_view.dart';
-import '../widgets/loading_view.dart';
-import '../widgets/product_card.dart';
-import 'product_detail_screen.dart';
+import '../../router/app_routes.dart';
+import '../l10n_extensions.dart';
+import '../widgets/product_grid.dart';
+import '../widgets/state_views.dart';
 
 class FavoritesScreen extends ConsumerWidget {
   const FavoritesScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final favoriteIds = ref.watch(favoritesProvider);
-    final productsAsync = ref.watch(productListProvider);
+    final l10n = context.l10n;
+    final favorites = ref.watch(favoriteProductsProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Favoris')),
-      body: productsAsync.when(
-        data: (products) {
-          final favorites =
-              products.where((p) => favoriteIds.contains(p.id)).toList();
-          if (favorites.isEmpty) {
-            return const EmptyState(
-              icon: Icons.favorite_border,
-              message: "Vous n'avez pas encore de favoris.",
-            );
-          }
-          return GridView.builder(
-            padding: const EdgeInsets.all(12),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 12,
-              crossAxisSpacing: 12,
-              childAspectRatio: 0.68,
-            ),
-            itemCount: favorites.length,
-            itemBuilder: (context, index) {
-              final product = favorites[index];
-              return ProductCard(
-                product: product,
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => ProductDetailScreen(productId: product.id),
-                  ),
-                ),
-              );
-            },
-          );
-        },
+      appBar: AppBar(title: Text(l10n.favoritesTitle)),
+      body: favorites.when(
+        data: (products) => products.isEmpty
+            ? EmptyState(
+                icon: Icons.favorite_border,
+                message: l10n.favoritesEmpty,
+                actionLabel: l10n.startShopping,
+                onAction: () => context.go(AppRoutes.catalog),
+              )
+            : ProductGrid(
+                products: products,
+                onProductTap: (product) =>
+                    context.go(AppRoutes.favoriteProduct(product.id)),
+              ),
         loading: () => const LoadingView(),
-        error: (error, stackTrace) => ErrorView(
-          message: '$error',
-          onRetry: () => ref.invalidate(productListProvider),
+        error: (error, _) => ErrorView(
+          message: l10n.catalogError,
+          onRetry: () => ref.invalidate(productsProvider),
         ),
       ),
     );

@@ -1,36 +1,48 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../data/models/product.dart';
 import '../data/repositories/favorites_storage.dart';
 import 'core_providers.dart';
+import 'product_providers.dart';
 
-final favoritesStorageProvider = Provider<FavoritesStorage>((ref) {
-  return FavoritesStorage(ref.watch(sharedPreferencesProvider));
-});
+final favoritesStorageProvider = Provider<FavoritesStorage>(
+  (ref) => FavoritesStorage(ref.watch(sharedPreferencesProvider)),
+);
 
-/// Gère l'ensemble des identifiants de produits favoris et les persiste
-/// localement à chaque modification.
-class FavoritesNotifier extends StateNotifier<Set<String>> {
-  FavoritesNotifier(this._storage) : super(_storage.read());
-
-  final FavoritesStorage _storage;
+class FavoritesNotifier extends Notifier<Set<String>> {
+  @override
+  Set<String> build() => ref.watch(favoritesStorageProvider).read();
 
   Future<void> toggle(String productId) async {
     final updated = {...state};
-    if (!updated.remove(productId)) {
-      updated.add(productId);
-    }
+    if (!updated.remove(productId)) updated.add(productId);
     state = updated;
-    await _storage.write(updated);
+    await ref.read(favoritesStorageProvider).write(updated);
   }
 }
 
-final favoritesProvider =
-    StateNotifierProvider<FavoritesNotifier, Set<String>>((ref) {
-  return FavoritesNotifier(ref.watch(favoritesStorageProvider));
-});
+final favoritesProvider = NotifierProvider<FavoritesNotifier, Set<String>>(
+  FavoritesNotifier.new,
+);
 
-/// Provider dérivé pratique pour savoir si un produit précis est favori,
-/// sans reconstruire les widgets qui ne s'intéressent qu'à cet état.
-final isFavoriteProvider = Provider.family<bool, String>((ref, productId) {
-  return ref.watch(favoritesProvider).contains(productId);
+/// Ne reconstruit que le bouton du produit concerné.
+final isFavoriteProvider = Provider.family<bool, String>(
+  (ref, productId) =>
+      ref.watch(favoritesProvider.select((ids) => ids.contains(productId))),
+);
+
+final favoritesCountProvider = Provider<int>(
+  (ref) => ref.watch(favoritesProvider).length,
+);
+
+final favoriteProductsProvider = Provider<AsyncValue<List<Product>>>((ref) {
+  final ids = ref.watch(favoritesProvider);
+  return ref
+      .watch(productsProvider)
+      .whenData(
+        (products) => [
+          for (final product in products)
+            if (ids.contains(product.id)) product,
+        ],
+      );
 });

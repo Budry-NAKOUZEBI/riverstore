@@ -1,12 +1,12 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../data/models/user_profile.dart';
 import '../data/repositories/user_repository.dart';
 
-final userRepositoryProvider = Provider<UserRepository>((ref) {
-  return const MockUserRepository();
-});
+final userRepositoryProvider = Provider<UserRepository>(
+  (ref) => const MockUserRepository(),
+);
 
-final userProfileProvider = FutureProvider<UserProfile>((ref) {
-  return ref.watch(userRepositoryProvider).fetchCurrentUser();
-});
+final userProfileProvider = FutureProvider<UserProfile>(
+  (ref) => ref.watch(userRepositoryProvider).fetchCurrentUser(),
+);

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../data/models/product.dart';
+import '../../data/repositories/product_repository.dart';
 import '../../providers/cart_providers.dart';
 import '../../providers/product_providers.dart';
-import '../widgets/error_view.dart';
+import '../l10n_extensions.dart';
+import '../widgets/add_to_cart_button.dart';
 import '../widgets/favorite_toggle_button.dart';
-import '../widgets/loading_view.dart';
+import '../widgets/product_image.dart';
 import '../widgets/rating_stars.dart';
+import '../widgets/state_views.dart';
 
 class ProductDetailScreen extends ConsumerWidget {
   const ProductDetailScreen({super.key, required this.productId});
@@ -16,86 +19,152 @@ class ProductDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final productAsync = ref.watch(productByIdProvider(productId));
+    final l10n = context.l10n;
+    final product = ref.watch(productByIdProvider(productId));
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Détail produit'),
+        title: Text(l10n.productDetailTitle),
         actions: [FavoriteToggleButton(productId: productId)],
       ),
-      body: productAsync.when(
+      body: product.when(
         data: (product) => _ProductDetailBody(product: product),
         loading: () => const LoadingView(),
-        error: (error, stackTrace) => ErrorView(
-          message: '$error',
-          onRetry: () => ref.invalidate(productListProvider),
+        error: (error, _) => error is ProductNotFoundException
+            ? EmptyState(icon: Icons.search_off, message: l10n.productNotFound)
+            : ErrorView(
+                message: l10n.catalogError,
+                onRetry: () => ref.invalidate(productsProvider),
+              ),
+      ),
+      bottomNavigationBar: product.hasValue
+          ? _AddToCartBar(product: product.requireValue)
+          : null,
+    );
+  }
+}
+
+class _ProductDetailBody extends StatelessWidget {
+  const _ProductDetailBody({required this.product});
+
+  final Product product;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final name = product.name.resolve(context.languageCode);
+
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 720),
+        child: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: ProductImage(
+                  url: product.imageUrl,
+                  semanticLabel: l10n.productImageSemantics(name),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Semantics(
+              header: true,
+              child: Text(name, style: theme.textTheme.headlineSmall),
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                RatingStars(rating: product.rating, size: 20),
+                const SizedBox(width: 12),
+                Text(
+                  product.category.label(l10n),
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    color: theme.colorScheme.secondary,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Text(
+              context.formatPrice(product.priceInCents),
+              style: theme.textTheme.headlineMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: theme.colorScheme.primary,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              product.inStock
+                  ? l10n.inStockCount(product.stock)
+                  : l10n.outOfStock,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: product.inStock
+                    ? theme.colorScheme.tertiary
+                    : theme.colorScheme.error,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              product.description.resolve(context.languageCode),
+              style: theme.textTheme.bodyLarge,
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class _ProductDetailBody extends ConsumerWidget {
-  const _ProductDetailBody({required this.product});
+class _AddToCartBar extends ConsumerWidget {
+  const _AddToCartBar({required this.product});
 
   final Product product;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: AspectRatio(
-            aspectRatio: 1,
-            child: Image.network(
-              product.imageUrl,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => Container(
-                color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                child: const Icon(Icons.image_not_supported_outlined, size: 48),
+    final l10n = context.l10n;
+    final inCart = ref.watch(cartItemProvider(product.id))?.quantity ?? 0;
+    final canAdd = product.inStock && inCart < product.stock;
+    final name = product.name.resolve(context.languageCode);
+
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (inCart > 0)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text(l10n.inCartCount(inCart)),
+              ),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton.icon(
+                onPressed: canAdd
+                    ? () {
+                        ref.read(cartProvider.notifier).addProduct(product);
+                        showCartSnackBar(context, l10n.addedToCart(name));
+                      }
+                    : null,
+                icon: const Icon(Icons.add_shopping_cart),
+                label: Text(
+                  !product.inStock
+                      ? l10n.outOfStock
+                      : canAdd
+                      ? l10n.addToCart
+                      : l10n.stockLimitReached,
+                ),
               ),
             ),
-          ),
+          ],
         ),
-        const SizedBox(height: 16),
-        Text(product.name, style: Theme.of(context).textTheme.headlineSmall),
-        const SizedBox(height: 4),
-        RatingStars(rating: product.rating, size: 20),
-        const SizedBox(height: 12),
-        Text(
-          '${product.price.toStringAsFixed(2)} €',
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          product.inStock ? '${product.stock} en stock' : 'Rupture de stock',
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: product.inStock
-                    ? Colors.green.shade700
-                    : Theme.of(context).colorScheme.error,
-              ),
-        ),
-        const SizedBox(height: 16),
-        Text(product.description, style: Theme.of(context).textTheme.bodyLarge),
-        const SizedBox(height: 24),
-        FilledButton.icon(
-          onPressed: product.inStock
-              ? () {
-                  ref.read(cartProvider.notifier).addProduct(product);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('${product.name} ajouté au panier')),
-                  );
-                }
-              : null,
-          icon: const Icon(Icons.add_shopping_cart),
-          label: const Text('Ajouter au panier'),
-        ),
-      ],
+      ),
     );
   }
 }

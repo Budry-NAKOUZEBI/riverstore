@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'theme/app_theme.dart';
-import 'ui/navigation/main_scaffold.dart';
+import 'providers/settings_providers.dart';
+import 'router/app_router.dart';
+import 'ui/l10n_extensions.dart';
+import 'ui/theme/app_theme.dart';
 
-class RiverStoreApp extends StatelessWidget {
+class RiverStoreApp extends ConsumerWidget {
   const RiverStoreApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'RiverStore',
+  Widget build(BuildContext context, WidgetRef ref) {
+    return MaterialApp.router(
+      onGenerateTitle: (context) => context.l10n.appTitle,
       debugShowCheckedModeBanner: false,
+      routerConfig: ref.watch(routerProvider),
+      locale: ref.watch(localeProvider),
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.system,
-      home: const MainScaffold(),
+      themeMode: ref.watch(themeModeProvider),
     );
   }
 }

@@ -1,75 +1,106 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../providers/cart_providers.dart';
+import '../../router/app_routes.dart';
+import '../l10n_extensions.dart';
 import '../widgets/cart_item_tile.dart';
-import '../widgets/empty_state.dart';
+import '../widgets/order_summary.dart';
+import '../widgets/state_views.dart';
 
 class CartScreen extends ConsumerWidget {
   const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cart = ref.watch(cartProvider);
+    final l10n = context.l10n;
+    // Ne se reconstruit que lorsque des lignes sont ajoutées ou retirées ;
+    // les changements de quantité sont gérés par chaque ligne.
+    final productIds = ref.watch(cartProductIdsProvider);
+    final isEmpty = productIds.length == 0;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mon panier'),
+        title: Text(l10n.cartTitle),
         actions: [
-          if (!cart.isEmpty)
+          if (!isEmpty)
             IconButton(
-              tooltip: 'Vider le panier',
-              onPressed: () => ref.read(cartProvider.notifier).clear(),
+              tooltip: l10n.clearCart,
               icon: const Icon(Icons.delete_sweep_outlined),
+              onPressed: () => _confirmClear(context, ref),
             ),
         ],
       ),
-      body: cart.isEmpty
-          ? const EmptyState(
+      body: isEmpty
+          ? EmptyState(
               icon: Icons.shopping_cart_outlined,
-              message: 'Votre panier est vide.',
+              message: l10n.cartEmpty,
+              actionLabel: l10n.startShopping,
+              onAction: () => context.go(AppRoutes.catalog),
             )
           : ListView.separated(
               padding: const EdgeInsets.symmetric(vertical: 8),
-              itemCount: cart.itemList.length,
-              separatorBuilder: (_, __) => const Divider(height: 1),
-              itemBuilder: (context, index) =>
-                  CartItemTile(item: cart.itemList[index]),
-            ),
-      bottomNavigationBar: cart.isEmpty
-          ? null
-          : SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Total', style: Theme.of(context).textTheme.bodyMedium),
-                          Text(
-                            '${cart.totalPrice.toStringAsFixed(2)} €',
-                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    FilledButton(
-                      onPressed: () {
-                        ref.read(cartProvider.notifier).clear();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Commande confirmée, merci !')),
-                        );
-                      },
-                      child: const Text('Commander'),
-                    ),
-                  ],
-                ),
+              itemCount: productIds.length,
+              separatorBuilder: (_, _) => const Divider(height: 1),
+              itemBuilder: (context, index) => CartItemTile(
+                key: ValueKey(productIds[index]),
+                productId: productIds[index],
               ),
             ),
+      bottomNavigationBar: isEmpty ? null : const _CartFooter(),
+    );
+  }
+
+  Future<void> _confirmClear(BuildContext context, WidgetRef ref) async {
+    final l10n = context.l10n;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.clearCartConfirmTitle),
+        content: Text(l10n.clearCartConfirmBody),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(l10n.cancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text(l10n.confirm),
+          ),
+        ],
+      ),
+    );
+    if (confirmed ?? false) ref.read(cartProvider.notifier).clear();
+  }
+}
+
+class _CartFooter extends ConsumerWidget {
+  const _CartFooter();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final pricing = ref.watch(cartPricingProvider);
+    return Material(
+      elevation: 3,
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              OrderSummary(pricing: pricing),
+              const SizedBox(height: 12),
+              FilledButton.icon(
+                onPressed: () => context.go(AppRoutes.checkout),
+                icon: const Icon(Icons.lock_outline),
+                label: Text(context.l10n.checkout),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

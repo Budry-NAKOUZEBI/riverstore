@@ -10,28 +10,35 @@ class ProductNotFoundException implements Exception {
   final String productId;
 
   @override
-  String toString() =>
-      'Aucun produit trouvé pour l\'identifiant "$productId".';
+  String toString() => 'ProductNotFoundException($productId)';
 }
 
-abstract class ProductRepository {
+abstract interface class ProductRepository {
   Future<List<Product>> fetchProducts();
 }
 
-/// Repository de démonstration : charge le catalogue depuis un fichier
-/// JSON embarqué dans les assets, avec un léger délai simulant un appel
-/// réseau réel.
-class MockProductRepository implements ProductRepository {
-  const MockProductRepository({AssetBundle? bundle}) : _bundle = bundle;
+/// Charge le catalogue depuis un fichier JSON embarqué dans les assets,
+/// avec un délai simulant un appel réseau.
+class AssetProductRepository implements ProductRepository {
+  const AssetProductRepository({
+    AssetBundle? bundle,
+    this.latency = const Duration(milliseconds: 400),
+  }) : _bundle = bundle;
+
+  static const assetPath = 'assets/data/products.json';
 
   final AssetBundle? _bundle;
-  static const _assetPath = 'assets/data/products.json';
+  final Duration latency;
 
   @override
   Future<List<Product>> fetchProducts() async {
-    await Future.delayed(const Duration(milliseconds: 600));
-    final bundle = _bundle ?? rootBundle;
-    final raw = await bundle.loadString(_assetPath);
+    if (latency > Duration.zero) await Future<void>.delayed(latency);
+    final raw = await (_bundle ?? rootBundle).loadString(assetPath);
+    return parseProducts(raw);
+  }
+
+  /// Décodage isolé dans une fonction pure pour être testé sans assets.
+  static List<Product> parseProducts(String raw) {
     final decoded = jsonDecode(raw) as List<dynamic>;
     return decoded
         .map((entry) => Product.fromJson(entry as Map<String, dynamic>))

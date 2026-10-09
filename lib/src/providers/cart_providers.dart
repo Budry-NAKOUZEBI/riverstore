@@ -1,62 +1,73 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../data/models/cart_item.dart';
+import '../data/models/cart.dart';
 import '../data/models/product.dart';
 
-/// Gère l'état du panier : ajout, suppression et mise à jour des
-/// quantités.
-class CartNotifier extends StateNotifier<CartState> {
-  CartNotifier() : super(const CartState());
+class CartNotifier extends Notifier<CartState> {
+  @override
+  CartState build() => const CartState();
 
-  void addProduct(Product product, {int quantity = 1}) {
-    final items = {...state.items};
-    final existing = items[product.id];
-    items[product.id] = existing == null
-        ? CartItem(product: product, quantity: quantity)
-        : existing.copyWith(quantity: existing.quantity + quantity);
-    state = state.copyWith(items: items);
+  /// Ajoute [quantity] exemplaires sans jamais dépasser le stock.
+  /// Renvoie `false` si rien n'a pu être ajouté.
+  bool addProduct(Product product, {int quantity = 1}) {
+    final current = state.quantityOf(product.id);
+    final target = (current + quantity).clamp(0, product.stock);
+    if (target <= current) return false;
+    _put(product, target);
+    return true;
   }
 
   void removeProduct(String productId) {
-    final items = {...state.items}..remove(productId);
-    state = state.copyWith(items: items);
+    if (!state.items.containsKey(productId)) return;
+    state = CartState(items: {...state.items}..remove(productId));
   }
 
   void setQuantity(String productId, int quantity) {
+    final existing = state.items[productId];
+    if (existing == null) return;
     if (quantity <= 0) {
       removeProduct(productId);
       return;
     }
-    final existing = state.items[productId];
-    if (existing == null) return;
-    final items = {...state.items};
-    items[productId] = existing.copyWith(quantity: quantity);
-    state = state.copyWith(items: items);
+    _put(existing.product, quantity.clamp(1, existing.product.stock));
   }
 
-  void increment(String productId) {
-    final existing = state.items[productId];
-    if (existing != null) setQuantity(productId, existing.quantity + 1);
-  }
+  void increment(String productId) =>
+      setQuantity(productId, state.quantityOf(productId) + 1);
 
-  void decrement(String productId) {
-    final existing = state.items[productId];
-    if (existing != null) setQuantity(productId, existing.quantity - 1);
-  }
+  void decrement(String productId) =>
+      setQuantity(productId, state.quantityOf(productId) - 1);
 
   void clear() => state = const CartState();
+
+  void _put(Product product, int quantity) {
+    state = CartState(
+      items: {
+        ...state.items,
+        product.id: CartItem(product: product, quantity: quantity),
+      },
+    );
+  }
 }
 
-final cartProvider = StateNotifierProvider<CartNotifier, CartState>((ref) {
-  return CartNotifier();
-});
+final cartProvider = NotifierProvider<CartNotifier, CartState>(
+  CartNotifier.new,
+);
 
-/// Providers dérivés pour exposer des valeurs calculées sans dupliquer
-/// la logique dans les widgets (badge du panier, résumé de commande...).
-final cartItemCountProvider = Provider<int>((ref) {
-  return ref.watch(cartProvider).totalQuantity;
-});
+/// Providers dérivés : chaque widget n'écoute que la valeur dont il a besoin.
+final cartItemCountProvider = Provider<int>(
+  (ref) => ref.watch(cartProvider).totalQuantity,
+);
 
-final cartTotalPriceProvider = Provider<double>((ref) {
-  return ref.watch(cartProvider).totalPrice;
-});
+final cartProductIdsProvider = Provider<ProductIdList>(
+  (ref) => ref.watch(cartProvider).productIds,
+);
+
+final cartItemProvider = Provider.family<CartItem?, String>(
+  (ref, productId) => ref.watch(cartProvider.select((c) => c.items[productId])),
+);
+
+final cartPricingProvider = Provider<OrderPricing>(
+  (ref) =>
+      OrderPricing(subtotalInCents: ref.watch(cartProvider).subtotalInCents),
+);

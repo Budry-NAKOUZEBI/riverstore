@@ -1,70 +1,70 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../providers/filter_providers.dart';
 import '../../providers/product_providers.dart';
-import '../widgets/empty_state.dart';
-import '../widgets/error_view.dart';
-import '../widgets/loading_view.dart';
-import '../widgets/product_card.dart';
-import '../widgets/sort_filter_bar.dart';
-import 'product_detail_screen.dart';
+import '../../router/app_routes.dart';
+import '../l10n_extensions.dart';
+import '../widgets/catalog_filters.dart';
+import '../widgets/product_grid.dart';
+import '../widgets/state_views.dart';
 
-class CatalogScreen extends ConsumerWidget {
+class CatalogScreen extends StatelessWidget {
   const CatalogScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final filteredProducts = ref.watch(filteredProductsProvider);
-
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('RiverStore')),
-      body: Column(
+      appBar: AppBar(
+        title: Text(context.l10n.appTitle),
+        actions: const [SortMenuButton()],
+      ),
+      body: const Column(
         children: [
-          const SortFilterBar(),
-          const Divider(height: 1),
-          Expanded(
-            child: filteredProducts.when(
-              data: (products) {
-                if (products.isEmpty) {
-                  return const EmptyState(
-                    icon: Icons.search_off,
-                    message: 'Aucun produit ne correspond à votre recherche.',
-                  );
-                }
-                return GridView.builder(
-                  padding: const EdgeInsets.all(12),
-                  gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 12,
-                    crossAxisSpacing: 12,
-                    childAspectRatio: 0.68,
-                  ),
-                  itemCount: products.length,
-                  itemBuilder: (context, index) {
-                    final product = products[index];
-                    return ProductCard(
-                      product: product,
-                      onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) =>
-                              ProductDetailScreen(productId: product.id),
-                        ),
-                      ),
-                    );
-                  },
-                );
-              },
-              loading: () =>
-                  const LoadingView(label: 'Chargement du catalogue…'),
-              error: (error, stackTrace) => ErrorView(
-                message: 'Impossible de charger les produits.\n$error',
-                onRetry: () => ref.invalidate(productListProvider),
-              ),
-            ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(16, 8, 16, 4),
+            child: CatalogSearchField(),
           ),
+          CategoryChips(),
+          Expanded(child: _CatalogBody()),
         ],
+      ),
+    );
+  }
+}
+
+class _CatalogBody extends ConsumerWidget {
+  const _CatalogBody();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final products = ref.watch(filteredProductsProvider(context.languageCode));
+
+    return products.when(
+      data: (items) {
+        if (items.isEmpty) {
+          return EmptyState(
+            icon: Icons.search_off,
+            message: l10n.catalogEmpty,
+            actionLabel: l10n.resetFilters,
+            onAction: ref.read(filterProvider.notifier).reset,
+          );
+        }
+        return RefreshIndicator(
+          onRefresh: () => ref.refresh(productsProvider.future),
+          child: ProductGrid(
+            products: items,
+            onProductTap: (product) =>
+                context.go(AppRoutes.catalogProduct(product.id)),
+          ),
+        );
+      },
+      loading: () => LoadingView(label: l10n.catalogLoading),
+      error: (error, _) => ErrorView(
+        message: l10n.catalogError,
+        onRetry: () => ref.invalidate(productsProvider),
       ),
     );
   }

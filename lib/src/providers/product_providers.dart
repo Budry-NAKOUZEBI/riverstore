@@ -1,47 +1,37 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../data/models/product.dart';
+import '../data/models/product_category.dart';
 import '../data/repositories/product_repository.dart';
 
-/// Injection de dépendance : expose l'implémentation du repository.
-/// Peut être surchargé dans les tests pour fournir un repository factice.
-final productRepositoryProvider = Provider<ProductRepository>((ref) {
-  return const MockProductRepository();
+final productRepositoryProvider = Provider<ProductRepository>(
+  (ref) => const AssetProductRepository(),
+);
+
+/// Catalogue complet, chargé une seule fois puis gardé en mémoire.
+final productsProvider = FutureProvider<List<Product>>(
+  (ref) => ref.watch(productRepositoryProvider).fetchProducts(),
+);
+
+/// Catégories effectivement présentes dans le catalogue, dans l'ordre de
+/// l'énumération.
+final categoriesProvider = Provider<List<ProductCategory>>((ref) {
+  final products = ref.watch(productsProvider).value ?? const <Product>[];
+  final present = {for (final product in products) product.category};
+  return [
+    for (final category in ProductCategory.values)
+      if (present.contains(category)) category,
+  ];
 });
 
-/// Charge le catalogue de produits de façon asynchrone. Le résultat est
-/// exposé sous forme d'[AsyncValue] afin que l'UI puisse distinguer les
-/// états chargement / données / erreur.
-final productListProvider = FutureProvider<List<Product>>((ref) {
-  return ref.watch(productRepositoryProvider).fetchProducts();
-});
-
-/// Liste triée des catégories disponibles, dérivée du catalogue.
-final categoriesProvider = Provider<AsyncValue<List<String>>>((ref) {
-  return ref.watch(productListProvider).whenData((products) {
-    final categories = products.map((p) => p.category).toSet().toList()
-      ..sort();
-    return categories;
+final productByIdProvider = Provider.family<AsyncValue<Product>, String>((
+  ref,
+  productId,
+) {
+  return ref.watch(productsProvider).whenData((products) {
+    for (final product in products) {
+      if (product.id == productId) return product;
+    }
+    throw ProductNotFoundException(productId);
   });
-});
-
-/// Recherche un produit par identifiant au sein du catalogue déjà chargé.
-final productByIdProvider =
-    Provider.family<AsyncValue<Product>, String>((ref, productId) {
-  final productsAsync = ref.watch(productListProvider);
-  return productsAsync.when(
-    data: (products) {
-      for (final product in products) {
-        if (product.id == productId) {
-          return AsyncValue.data(product);
-        }
-      }
-      return AsyncValue.error(
-        ProductNotFoundException(productId),
-        StackTrace.current,
-      );
-    },
-    loading: () => const AsyncValue.loading(),
-    error: (error, stackTrace) => AsyncValue.error(error, stackTrace),
-  );
 });

@@ -1,3 +1,7 @@
+import 'package:flutter/foundation.dart';
+
+import 'product_category.dart';
+
 enum SortOption {
   relevance,
   priceLowToHigh,
@@ -6,23 +10,7 @@ enum SortOption {
   nameAToZ,
 }
 
-extension SortOptionLabel on SortOption {
-  String get label {
-    switch (this) {
-      case SortOption.relevance:
-        return 'Pertinence';
-      case SortOption.priceLowToHigh:
-        return 'Prix croissant';
-      case SortOption.priceHighToLow:
-        return 'Prix décroissant';
-      case SortOption.ratingHighToLow:
-        return 'Meilleures notes';
-      case SortOption.nameAToZ:
-        return 'Nom (A-Z)';
-    }
-  }
-}
-
+@immutable
 class ProductFilter {
   const ProductFilter({
     this.category,
@@ -30,12 +18,17 @@ class ProductFilter {
     this.sortOption = SortOption.relevance,
   });
 
-  final String? category;
+  final ProductCategory? category;
   final String searchQuery;
   final SortOption sortOption;
 
+  bool get isDefault =>
+      category == null &&
+      searchQuery.isEmpty &&
+      sortOption == SortOption.relevance;
+
   ProductFilter copyWith({
-    String? category,
+    ProductCategory? category,
     bool clearCategory = false,
     String? searchQuery,
     SortOption? sortOption,
@@ -46,4 +39,14 @@ class ProductFilter {
       sortOption: sortOption ?? this.sortOption,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      other is ProductFilter &&
+      other.category == category &&
+      other.searchQuery == searchQuery &&
+      other.sortOption == sortOption;
+
+  @override
+  int get hashCode => Object.hash(category, searchQuery, sortOption);
 }
