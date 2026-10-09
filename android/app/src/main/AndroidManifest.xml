@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Requis en release pour charger les images produits. -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:label="RiverStore"
         android:name="${applicationName}"

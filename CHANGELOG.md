@@ -7,6 +7,34 @@ projet respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-10-09
+
+Version « production-ready » : l'application est testée de bout en bout,
+mesurée, construite et publiée automatiquement.
+
+### Added
+- **Tests d'intégration** (`integration_test/`) exécutés sur l'application
+  réelle :
+  - parcours d'achat complet (recherche → détail → panier → paiement →
+    confirmation → historique dans le profil) ;
+  - persistance des favoris, de la langue et du thème après redémarrage ;
+  - mesure des temps de frame pendant le défilement du catalogue
+    (`watchPerformance`), exploitable en mode profile avec `flutter drive`.
+- Génération automatique des captures d'écran du README
+  (`integration_test/screenshots_test.dart`, désactivée par défaut).
+- **CI/CD GitHub Actions** : format, `flutter analyze --fatal-infos`, tests
+  avec couverture, tests d'intégration sous Xvfb, build de l'APK release et
+  publication d'une release GitHub à chaque tag `v*`.
+- Dependabot (dépendances pub et actions GitHub).
+- README professionnel, captures d'écran, licence MIT.
+
+### Changed
+- Titre de la fenêtre Linux et locales iOS déclarées (`CFBundleLocalizations`).
+
+### Fixed
+- Android : ajout de la permission `INTERNET` dans le manifeste principal.
+  Sans elle, les images produits ne se chargeaient pas dans l'APK release.
+
 ## [1.1.0] - 2026-10-09
 
 Refonte de l'architecture, internationalisation, accessibilité et suite de
@@ -74,6 +102,7 @@ Première version de RiverStore (jalon « State management avec Riverpod »).
 - Profil utilisateur simulé.
 - Thèmes clair et sombre Material 3.
 
-[Unreleased]: https://github.com/dp1370913-pixel/riverstore/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/dp1370913-pixel/riverstore/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/dp1370913-pixel/riverstore/compare/v1.1.0...v2.0.0
 [1.1.0]: https://github.com/dp1370913-pixel/riverstore/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/dp1370913-pixel/riverstore/releases/tag/v1.0.0
