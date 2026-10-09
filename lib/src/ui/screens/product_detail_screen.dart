@@ -38,9 +38,12 @@ class ProductDetailScreen extends ConsumerWidget {
       error: (error, _) => Scaffold(
         appBar: AppBar(title: Text(l10n.productDetailTitle)),
         body: error is ProductNotFoundException
-            ? EmptyState(icon: Icons.search_off, message: l10n.productNotFound)
+            ? EmptyState(
+                icon: Icons.search_off,
+                message: userMessageFor(error, l10n),
+              )
             : ErrorView(
-                message: l10n.catalogError,
+                message: userMessageFor(error, l10n),
                 onRetry: () => ref.invalidate(productsProvider),
               ),
       ),

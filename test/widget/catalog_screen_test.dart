@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:riverstore/src/core/errors.dart';
 import 'package:riverstore/src/ui/screens/catalog_screen.dart';
 import 'package:riverstore/src/ui/widgets/catalog_filters.dart';
 import 'package:riverstore/src/ui/widgets/product_card.dart';
@@ -76,7 +77,8 @@ void main() {
   });
 
   testWidgets('an error offers to retry', (tester) async {
-    final repository = FakeProductRepository()..error = Exception('offline');
+    final repository = FakeProductRepository()
+      ..error = const CatalogLoadException('offline');
     await tester.pumpLocalized(
       const CatalogScreen(),
       productRepository: repository,

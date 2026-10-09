@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../core/errors.dart';
 import '../../core/validators.dart';
 import '../../data/models/order.dart';
 import '../../providers/cart_providers.dart';
@@ -48,7 +49,15 @@ class CheckoutScreen extends HookConsumerWidget {
       if (next.hasError && !next.isLoading) {
         ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
-          ..showSnackBar(SnackBar(content: Text(l10n.orderFailed)));
+          ..showSnackBar(
+            SnackBar(
+              content: Text(
+                next.error is AppException
+                    ? userMessageFor(next.error!, l10n)
+                    : l10n.orderFailed,
+              ),
+            ),
+          );
       }
     });
 

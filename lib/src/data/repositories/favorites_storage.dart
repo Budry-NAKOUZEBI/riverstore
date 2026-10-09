@@ -1,15 +1,18 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'key_value_store.dart';
 
 /// Persiste les identifiants des produits favoris.
-class FavoritesStorage {
-  const FavoritesStorage(this._prefs);
+class FavoritesStorage extends KeyValueStore<Set<String>> {
+  const FavoritesStorage(super.preferences);
 
   static const key = 'favorite_product_ids';
 
-  final SharedPreferences _prefs;
+  @override
+  Set<String> get defaultValue => <String>{};
 
-  Set<String> read() => _prefs.getStringList(key)?.toSet() ?? <String>{};
+  @override
+  Set<String>? decode() => preferences.getStringList(key)?.toSet();
 
-  Future<void> write(Set<String> ids) =>
-      _prefs.setStringList(key, ids.toList()..sort());
+  @override
+  Future<void> write(Set<String> value) =>
+      preferences.setStringList(key, value.toList()..sort());
 }

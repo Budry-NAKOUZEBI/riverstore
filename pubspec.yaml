@@ -2,7 +2,7 @@ name: riverstore
 description: "RiverStore — boutique en ligne Flutter pour le Congo-Brazzaville (FCFA, Mobile Money, i18n FR/EN)."
 publish_to: 'none'
 
-version: 2.1.0+5
+version: 2.2.0+6
 
 environment:
   sdk: '>=3.8.0 <4.0.0'

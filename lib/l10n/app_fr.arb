@@ -332,5 +332,6 @@
     }
   },
   "detailDescription": "Description",
-  "detailPrice": "Prix"
+  "detailPrice": "Prix",
+  "errorUnexpected": "Une erreur inattendue est survenue."
 }

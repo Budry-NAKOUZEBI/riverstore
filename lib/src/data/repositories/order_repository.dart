@@ -1,11 +1,15 @@
+import '../../core/errors.dart';
 import '../models/cart.dart';
 import '../models/order.dart';
+import 'simulated_latency.dart';
 
-class EmptyCartException implements Exception {
-  const EmptyCartException();
-}
+export '../../core/errors.dart' show EmptyCartException, OrderFailedException;
 
-abstract interface class OrderRepository {
+abstract class OrderRepository {
+  const OrderRepository();
+
+  /// Enregistre la commande. Lève une [EmptyCartException] si [items] est
+  /// vide, une [OrderFailedException] si le service la refuse.
   Future<Order> placeOrder({
     required List<CartItem> items,
     required ShippingAddress address,
@@ -14,13 +18,16 @@ abstract interface class OrderRepository {
 }
 
 /// Simule l'envoi d'une commande à un backend (paiement Mobile Money fictif).
-class MockOrderRepository implements OrderRepository {
+class MockOrderRepository extends OrderRepository with SimulatedLatency {
   MockOrderRepository({
     this.latency = const Duration(milliseconds: 800),
     DateTime Function()? clock,
   }) : _clock = clock ?? DateTime.now;
 
+  @override
   final Duration latency;
+
+  /// Horloge injectable : numéros de commande et dates déterministes en test.
   final DateTime Function() _clock;
 
   @override
@@ -30,7 +37,7 @@ class MockOrderRepository implements OrderRepository {
     required PaymentMethod paymentMethod,
   }) async {
     if (items.isEmpty) throw const EmptyCartException();
-    if (latency > Duration.zero) await Future<void>.delayed(latency);
+    await simulateLatency();
     final now = _clock();
     final subtotal = items.fold(0, (total, item) => total + item.subtotal);
     return Order(

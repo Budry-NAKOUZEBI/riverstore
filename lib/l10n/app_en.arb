@@ -130,5 +130,6 @@
   "avatarSemantics": "Initials of {name}",
   "productCategoryLabel": "Category: {category}",
   "detailDescription": "Description",
-  "detailPrice": "Price"
+  "detailPrice": "Price",
+  "errorUnexpected": "An unexpected error occurred."
 }

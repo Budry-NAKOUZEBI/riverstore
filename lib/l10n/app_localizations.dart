@@ -883,6 +883,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Prix'**
   String get detailPrice;
+
+  /// No description provided for @errorUnexpected.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une erreur inattendue est survenue.'**
+  String get errorUnexpected;
 }
 
 class _AppLocalizationsDelegate

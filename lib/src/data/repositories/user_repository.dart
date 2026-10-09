@@ -1,18 +1,22 @@
 import '../models/user_profile.dart';
+import 'simulated_latency.dart';
 
-abstract interface class UserRepository {
+abstract class UserRepository {
+  const UserRepository();
+
   Future<UserProfile> fetchCurrentUser();
 }
 
 /// Profil de démonstration : l'authentification est hors périmètre.
-class MockUserRepository implements UserRepository {
+class MockUserRepository extends UserRepository with SimulatedLatency {
   const MockUserRepository({this.latency = const Duration(milliseconds: 300)});
 
+  @override
   final Duration latency;
 
   @override
   Future<UserProfile> fetchCurrentUser() async {
-    if (latency > Duration.zero) await Future<void>.delayed(latency);
+    await simulateLatency();
     return UserProfile(
       id: 'u1',
       name: 'Grâce Mabiala',

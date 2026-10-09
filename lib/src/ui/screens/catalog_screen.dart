@@ -179,7 +179,7 @@ class _CatalogBody extends ConsumerWidget {
       error: (error, _) => SliverFillRemaining(
         hasScrollBody: false,
         child: ErrorView(
-          message: l10n.catalogError,
+          message: userMessageFor(error, l10n),
           onRetry: () => ref.invalidate(productsProvider),
         ),
       ),

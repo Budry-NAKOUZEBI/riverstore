@@ -487,4 +487,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get detailPrice => 'Prix';
+
+  @override
+  String get errorUnexpected => 'Une erreur inattendue est survenue.';
 }

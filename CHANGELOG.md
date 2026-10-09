@@ -7,6 +7,35 @@ projet respecte le [versionnage sémantique](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-10-09
+
+Préparation à la mise en production : signature, erreurs typées et
+documentation.
+
+### Added
+- **Signature release Android** : clé lue depuis `android/key.properties`
+  (non versionné) en local et depuis les secrets GitHub en CI ; un tag de
+  version échoue si la clé est absente. Guide dans `docs/RELEASE.md`.
+- **App Bundle (AAB)** pour le Play Store en plus de l'APK, code Dart
+  **obfusqué** et symboles de débogage archivés par la CI.
+- **Hiérarchie d'exceptions métier** `sealed class AppException`
+  (`CatalogLoadException`, `ProductNotFoundException`, `EmptyCartException`,
+  `OrderFailedException`), traduite pour l'utilisateur par un `switch`
+  exhaustif.
+- Classe abstraite générique `KeyValueStore<T>` (favoris, réglages) et mixin
+  `SimulatedLatency` partagé par les repositories de démonstration.
+- 7 tests unitaires (exceptions, JSON invalide, asset manquant, stockage
+  générique et données corrompues) : 84 tests au total.
+
+### Changed
+- Repositories déclarés en `abstract class` étendues par leurs
+  implémentations (au lieu de `abstract interface class`).
+- Une donnée mal formée ou un asset manquant devient une
+  `CatalogLoadException` qui conserve sa cause.
+- README raccourci : résumé, tableau « exigence → preuve » avec liens
+  directs ; détails déplacés dans `docs/` (architecture et POO, qualité,
+  design, publication).
+
 ## [2.1.0] - 2026-10-09
 
 Adaptation au Congo-Brazzaville et nouvelle identité visuelle.
@@ -139,7 +168,8 @@ Première version de RiverStore (jalon « State management avec Riverpod »).
 - Profil utilisateur simulé.
 - Thèmes clair et sombre Material 3.
 
-[Unreleased]: https://github.com/Budry-NAKOUZEBI/riverstore/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/Budry-NAKOUZEBI/riverstore/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/Budry-NAKOUZEBI/riverstore/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/Budry-NAKOUZEBI/riverstore/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/Budry-NAKOUZEBI/riverstore/compare/v1.1.0...v2.0.0
 [1.1.0]: https://github.com/Budry-NAKOUZEBI/riverstore/compare/v1.0.0...v1.1.0

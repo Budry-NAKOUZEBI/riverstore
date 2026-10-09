@@ -1,8 +1,19 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }
+
+// Clé de signature release : lue depuis android/key.properties (jamais
+// versionné). En CI, ce fichier est généré à partir des secrets GitHub.
+val keystorePropertiesFile = rootProject.file("key.properties")
+val keystoreProperties = Properties().apply {
+    if (keystorePropertiesFile.exists()) load(FileInputStream(keystorePropertiesFile))
+}
+val hasReleaseKey = keystorePropertiesFile.exists()
 
 android {
     namespace = "com.riverstore.riverstore"
@@ -15,7 +26,6 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.riverstore.riverstore"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
@@ -29,11 +39,23 @@ android {
         versionName = flutter.versionName
     }
 
+    signingConfigs {
+        if (hasReleaseKey) {
+            create("release") {
+                keyAlias = keystoreProperties["keyAlias"] as String
+                keyPassword = keystoreProperties["keyPassword"] as String
+                storeFile = file(keystoreProperties["storeFile"] as String)
+                storePassword = keystoreProperties["storePassword"] as String
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            // Sans clé (machine de développement), on retombe sur la clé de
+            // debug pour que `flutter run --release` fonctionne ; la CI
+            // refuse de publier une version dans ce cas.
+            signingConfig = signingConfigs.getByName(if (hasReleaseKey) "release" else "debug")
         }
     }
 }

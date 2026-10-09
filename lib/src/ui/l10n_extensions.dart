@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../l10n/app_localizations.dart';
+import '../core/errors.dart';
 import '../core/formatters.dart' as formatters;
 import '../core/validators.dart';
 import '../data/models/order.dart';
@@ -60,3 +61,14 @@ extension PaymentMethodLabel on PaymentMethod {
     _ => l10n.paymentMobileHint,
   };
 }
+
+/// Message traduit pour n'importe quelle erreur. Le `switch` sur la classe
+/// scellée [AppException] est exhaustif : ajouter un nouveau type d'erreur
+/// sans message provoque une erreur de compilation.
+String userMessageFor(Object error, AppLocalizations l10n) => switch (error) {
+  CatalogLoadException() => l10n.catalogError,
+  ProductNotFoundException() => l10n.productNotFound,
+  EmptyCartException() => l10n.cartEmpty,
+  OrderFailedException() => l10n.orderFailed,
+  _ => l10n.errorUnexpected,
+};

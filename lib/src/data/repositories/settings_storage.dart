@@ -1,35 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/app_settings.dart';
+import 'key_value_store.dart';
 
-/// Persiste les préférences (langue, thème). Une valeur inconnue ou absente
-/// retombe sur la valeur par défaut au lieu de faire planter l'app.
-class SettingsStorage {
-  const SettingsStorage(this._prefs);
+/// Persiste les préférences (langue, thème). Une valeur inconnue retombe
+/// sur la valeur par défaut au lieu de faire planter l'app.
+class SettingsStorage extends KeyValueStore<AppSettings> {
+  const SettingsStorage(super.preferences);
 
   static const languageKey = 'settings.language';
   static const themeModeKey = 'settings.theme_mode';
 
-  final SharedPreferences _prefs;
+  @override
+  AppSettings get defaultValue => const AppSettings();
 
-  AppSettings read() {
-    return AppSettings(
-      language:
-          _byName(AppLanguage.values, _prefs.getString(languageKey)) ??
-          AppLanguage.system,
-      themeMode:
-          _byName(ThemeMode.values, _prefs.getString(themeModeKey)) ??
-          ThemeMode.system,
-    );
+  @override
+  AppSettings decode() => AppSettings(
+    language:
+        _byName(AppLanguage.values, preferences.getString(languageKey)) ??
+        defaultValue.language,
+    themeMode:
+        _byName(ThemeMode.values, preferences.getString(themeModeKey)) ??
+        defaultValue.themeMode,
+  );
+
+  @override
+  Future<void> write(AppSettings value) async {
+    await preferences.setString(languageKey, value.language.name);
+    await preferences.setString(themeModeKey, value.themeMode.name);
   }
 
-  Future<void> write(AppSettings settings) async {
-    await _prefs.setString(languageKey, settings.language.name);
-    await _prefs.setString(themeModeKey, settings.themeMode.name);
-  }
-
-  static T? _byName<T extends Enum>(List<T> values, String? name) {
+  /// Recherche générique d'une valeur d'énumération par son nom.
+  static E? _byName<E extends Enum>(List<E> values, String? name) {
     for (final value in values) {
       if (value.name == name) return value;
     }
